@@ -1,5 +1,6 @@
 package app.restora.pregnancytracker.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,8 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.core.view.WindowCompat
 import app.restora.pregnancytracker.R
 import app.restora.pregnancytracker.ui.components.BloomBottomBar
 import app.restora.pregnancytracker.ui.components.BloomTab
@@ -344,6 +348,17 @@ fun BloomApp() {
     BloomLocaleProvider(language) {
         // Apricot is the Dawn visual fallback; trimester mapping waits for an approved date rule.
         BloomTheme(mode = themeMode, season = BloomSeason.APRICOT) {
+            val view = LocalView.current
+            SideEffect {
+                val activity = view.context as? Activity
+                activity?.window?.let { window ->
+                    val insetsController = WindowCompat.getInsetsController(window, view)
+                    val lightSystemBars = themeMode != BloomThemeMode.NIGHT
+                    insetsController.isAppearanceLightStatusBars = lightSystemBars
+                    insetsController.isAppearanceLightNavigationBars = lightSystemBars
+                }
+            }
+
             val bottomBarVisible = !pregnancyEnded && screen in setOf(
                 BloomScreen.TODAY,
                 BloomScreen.CHECK_IN_DONE,
