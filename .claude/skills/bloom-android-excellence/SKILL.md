@@ -279,15 +279,20 @@ or expanding the promise. Use the wording approved for the screen being
 implemented.
 
 Treat every privacy statement as a product promise that the
-implementation must actually support: - Inspect persistence, network calls, analytics, crash
-reporting, backups, exports, and third-party SDKs before claiming data
-is local-only. - Do not add ads, tracking SDKs, cloud sync, telemetry,
-or new sensitive-data transmission without explicit product approval and
-accurate user disclosure. - Do not show a privacy claim that is
-contradicted by the implementation. - Never put pregnancy details, mood,
-notes, or other sensitive content into logs, analytics events, crash
-breadcrumbs, or notification previews without explicit approval. -
-Privacy controls must have real behavior, not decorative switches.
+implementation must actually support:
+
+- Inspect persistence, network calls, analytics, crash reporting,
+  backups, exports, and third-party SDKs before claiming data is
+  local-only.
+- Do not add ads, tracking SDKs, cloud sync, telemetry, or new
+  sensitive-data transmission without explicit product approval and
+  accurate user disclosure.
+- Do not show a privacy claim that is contradicted by the
+  implementation.
+- Never put pregnancy details, mood, notes, or other sensitive content
+  into logs, analytics events, crash breadcrumbs, or notification
+  previews without explicit approval.
+- Privacy controls must have real behavior, not decorative switches.
 
 ### Inclusive and local
 
