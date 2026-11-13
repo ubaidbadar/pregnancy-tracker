@@ -6,6 +6,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// The design reference specifies Fraunces and Figtree. It currently contains
+// web WOFF2 subsets rather than Android-ready TTF/OTF assets, so these are
+// explicit platform fallbacks until licensed Android font files are added.
 private val BloomDisplay = FontFamily.Serif
 private val BloomSans = FontFamily.SansSerif
 
