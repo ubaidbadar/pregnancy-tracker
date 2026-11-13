@@ -25,14 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.restora.pregnancytracker.R
 import app.restora.pregnancytracker.ui.components.BloomButton
-import app.restora.pregnancytracker.ui.components.BloomCard
 import app.restora.pregnancytracker.ui.components.BloomOrb
 import app.restora.pregnancytracker.ui.components.BloomPage
 import app.restora.pregnancytracker.ui.components.BloomPageTitle
 import app.restora.pregnancytracker.ui.components.BloomSecondaryButton
 import app.restora.pregnancytracker.ui.components.BloomTextButton
 import app.restora.pregnancytracker.ui.theme.LocalBloomPalette
-import app.restora.pregnancytracker.ui.theme.BloomThemeMode
 
 @Composable
 fun PremiumScreen(
