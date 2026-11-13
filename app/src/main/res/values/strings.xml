@@ -29,6 +29,7 @@
     <string name="skip">Skip</string>
     <string name="go_to_today">Go to Today</string>
     <string name="today_eyebrow">Your pregnancy</string>
+    <string name="open_profile">Open profile</string>
     <string name="good_morning">Good morning</string>
     <string name="good_morning_named">Good morning, %1$s</string>
     <string name="today_label">Today</string>
