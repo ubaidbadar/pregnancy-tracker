@@ -626,6 +626,7 @@ fun MeScreen(
     userLabel: String,
     partnerLabel: String,
     language: String,
+    quietMode: Boolean,
     onLanguageChange: (String) -> Unit,
     onExport: () -> Unit,
     onPauseOrEnd: () -> Unit,
@@ -697,31 +698,35 @@ fun MeScreen(
                 label = stringResource(R.string.labels),
                 value = labelsText
             )
-            BloomSettingRow(
-                label = stringResource(R.string.pause_or_end_tracking),
-                onClick = onPauseOrEnd
-            )
-            BloomSettingRow(
-                label = stringResource(R.string.together_title),
-                onClick = onTogether
-            )
-            BloomSettingRow(
-                label = stringResource(R.string.baby_arrived),
-                onClick = onBabyArrived
-            )
+            if (!quietMode) {
+                BloomSettingRow(
+                    label = stringResource(R.string.pause_or_end_tracking),
+                    onClick = onPauseOrEnd
+                )
+                BloomSettingRow(
+                    label = stringResource(R.string.together_title),
+                    onClick = onTogether
+                )
+                BloomSettingRow(
+                    label = stringResource(R.string.baby_arrived),
+                    onClick = onBabyArrived
+                )
+            }
         }
 
-        BloomCard {
-            BloomSectionLabel(stringResource(R.string.bloom_plus))
-            Text(
-                text = stringResource(R.string.premium_short_description),
-                color = palette.ink,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            BloomSecondaryButton(
-                text = stringResource(R.string.learn_about_bloom_plus),
-                onClick = onPremium
-            )
+        if (!quietMode) {
+            BloomCard {
+                BloomSectionLabel(stringResource(R.string.bloom_plus))
+                Text(
+                    text = stringResource(R.string.premium_short_description),
+                    color = palette.ink,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                BloomSecondaryButton(
+                    text = stringResource(R.string.learn_about_bloom_plus),
+                    onClick = onPremium
+                )
+            }
         }
     }
 
