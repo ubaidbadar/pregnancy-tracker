@@ -220,6 +220,7 @@ fun TodayScreen(
                 color = palette.deep
             )
         }
+    }
 }
 
 @Composable
