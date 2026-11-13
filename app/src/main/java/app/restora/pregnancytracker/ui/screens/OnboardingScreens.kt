@@ -3,6 +3,7 @@ package app.restora.pregnancytracker.ui.screens
 import android.app.DatePickerDialog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import app.restora.pregnancytracker.R
 import app.restora.pregnancytracker.ui.components.BloomButton
@@ -86,7 +87,7 @@ private fun LanguageChoice(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
         shape = RoundedCornerShape(24.dp),
         color = palette.surface,
         border = BorderStroke(
@@ -145,7 +146,7 @@ fun DueDateScreen(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
+                .clickable(role = Role.Button) {
                     val calendar = Calendar.getInstance().apply {
                         if (dueDateMillis > 0L) timeInMillis = dueDateMillis
                     }
