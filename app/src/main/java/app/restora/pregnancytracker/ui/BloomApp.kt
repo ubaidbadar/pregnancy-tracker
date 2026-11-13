@@ -135,17 +135,17 @@ fun BloomApp() {
     var previousScreenName by rememberSaveable { mutableStateOf(BloomScreen.TODAY.name) }
     val screen = runCatching { BloomScreen.valueOf(screenName) }.getOrDefault(BloomScreen.LANGUAGE)
 
-    var kickCount by rememberSaveable { mutableLongStateOf(0L) }
+    var kickCount by rememberSaveable { mutableLongStateOf(preferences.getLong("kick_count", 0L)) }
     var kickStartedAt by rememberSaveable { mutableLongStateOf(0L) }
     var kickElapsedSeconds by rememberSaveable { mutableLongStateOf(0L) }
-    var kickDurationSeconds by rememberSaveable { mutableLongStateOf(0L) }
+    var kickDurationSeconds by rememberSaveable { mutableLongStateOf(preferences.getLong("kick_duration", 0L)) }
     var kickActive by rememberSaveable { mutableStateOf(false) }
 
     var contractionStartedAt by rememberSaveable { mutableLongStateOf(0L) }
     var contractionLastStoppedAt by rememberSaveable { mutableLongStateOf(0L) }
-    var contractionDurations by rememberSaveable { mutableStateOf("") }
+    var contractionDurations by rememberSaveable { mutableStateOf(preferences.getString("contraction_durations", "") ?: "") }
     var contractionElapsedSeconds by rememberSaveable { mutableLongStateOf(0L) }
-    var contractionLastGapSeconds by rememberSaveable { mutableLongStateOf(0L) }
+    var contractionLastGapSeconds by rememberSaveable { mutableLongStateOf(preferences.getLong("contraction_last_gap", 0L)) }
     var contractionActive by rememberSaveable { mutableStateOf(false) }
 
     fun navigate(destination: BloomScreen) {
@@ -164,7 +164,31 @@ fun BloomApp() {
             contractionDurations = listOf(contractionDurations, contractionElapsedSeconds.toString())
                 .filter { it.isNotBlank() }
                 .joinToString(",")
+            preferences.edit()
+                .putLong("contraction_last_gap", contractionLastGapSeconds)
+                .putString("contraction_durations", contractionDurations)
+                .apply()
         }
+    }
+
+    fun startKickSession() {
+        kickCount = 0L
+        kickElapsedSeconds = 0L
+        kickDurationSeconds = 0L
+        kickStartedAt = SystemClock.elapsedRealtime()
+        kickActive = true
+        preferences.edit().putLong("kick_count", 0L).putLong("kick_duration", 0L).apply()
+        navigate(BloomScreen.KICK_COUNTER)
+    }
+
+    fun startContraction() {
+        val now = SystemClock.elapsedRealtime()
+        if (contractionLastStoppedAt > 0L) {
+            contractionLastGapSeconds = ((now - contractionLastStoppedAt) / 1_000L).coerceAtLeast(0L)
+        }
+        contractionStartedAt = now
+        contractionElapsedSeconds = 0L
+        contractionActive = true
     }
 
     fun selectLanguage(value: String) {
@@ -229,7 +253,10 @@ fun BloomApp() {
         checklistItem,
         trackingPaused,
         pregnancyEnded,
-        pregnancyArchived
+        pregnancyArchived,
+        kickCount,
+        kickDurationSeconds,
+        contractionDurations
     ) {
         buildString {
             appendLine("Bloom — on-device data export")
@@ -246,6 +273,9 @@ fun BloomApp() {
             appendLine("Tracking paused: " + trackingPaused)
             appendLine("Pregnancy ended: " + pregnancyEnded)
             appendLine("Pregnancy archived: " + pregnancyArchived)
+            appendLine("Latest kick count: " + kickCount)
+            appendLine("Latest kick session duration: " + formatDuration(kickDurationSeconds))
+            appendLine("Recorded contraction durations (seconds): " + contractionDurations)
         }
     }
 
@@ -389,14 +419,7 @@ fun BloomApp() {
                                 preferences.edit().putString("today_mood", it).apply()
                                 navigate(BloomScreen.CHECK_IN_DONE)
                             },
-                            onKicks = {
-                                kickCount = 0L
-                                kickElapsedSeconds = 0L
-                                kickDurationSeconds = 0L
-                                kickStartedAt = SystemClock.elapsedRealtime()
-                                kickActive = true
-                                navigate(BloomScreen.KICK_COUNTER)
-                            },
+                            onKicks = ::startKickSession,
                             onContractions = { navigate(BloomScreen.CONTRACTION_TIMER) },
                             onNote = { navigate(BloomScreen.JOURNAL) },
                             onWeekStory = { navigate(BloomScreen.WEEK_STORY) },
@@ -414,14 +437,7 @@ fun BloomApp() {
                             onNext = { navigate(BloomScreen.TODAY) }
                         )
                         BloomScreen.TOOLS -> ToolsScreen(
-                            onKickCounter = {
-                                kickCount = 0L
-                                kickElapsedSeconds = 0L
-                                kickDurationSeconds = 0L
-                                kickStartedAt = SystemClock.elapsedRealtime()
-                                kickActive = true
-                                navigate(BloomScreen.KICK_COUNTER)
-                            },
+                            onKickCounter = ::startKickSession,
                             onContractions = { navigate(BloomScreen.CONTRACTION_TIMER) },
                             onQuestions = { navigate(BloomScreen.PLAN) },
                             onHospitalBag = { navigate(BloomScreen.PLAN) }
@@ -429,10 +445,14 @@ fun BloomApp() {
                         BloomScreen.KICK_COUNTER -> KickCounterScreen(
                             count = kickCount,
                             elapsedSeconds = kickElapsedSeconds,
-                            onTap = { kickCount += 1L },
+                            onTap = {
+                                kickCount += 1L
+                                preferences.edit().putLong("kick_count", kickCount).apply()
+                            },
                             onEnd = {
                                 kickDurationSeconds = kickElapsedSeconds
                                 kickActive = false
+                                preferences.edit().putLong("kick_duration", kickDurationSeconds).apply()
                                 navigate(BloomScreen.KICK_SUMMARY)
                             }
                         )
@@ -459,16 +479,7 @@ fun BloomApp() {
                             elapsedSeconds = contractionElapsedSeconds,
                             lastGapSeconds = contractionLastGapSeconds,
                             isRunning = contractionActive,
-                            onStart = {
-                                val now = SystemClock.elapsedRealtime()
-                                if (contractionLastStoppedAt > 0L) {
-                                    contractionLastGapSeconds =
-                                        ((now - contractionLastStoppedAt) / 1_000L).coerceAtLeast(0L)
-                                }
-                                contractionStartedAt = now
-                                contractionElapsedSeconds = 0L
-                                contractionActive = true
-                            },
+                            onStart = ::startContraction,
                             durations = contractionDurations.split(",").mapNotNull { it.toLongOrNull() },
                             onStop = ::stopContraction,
                             onBack = {
