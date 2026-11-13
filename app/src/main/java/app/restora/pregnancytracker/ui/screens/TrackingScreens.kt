@@ -113,6 +113,7 @@ fun KickSummaryScreen(
         BloomOrb(
             value = count.toString(),
             label = stringResource(R.string.kicks_in_duration, formatDuration(durationSeconds)),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 230.dp,
             height = 207.dp,
             valueSize = 76
