@@ -1,3 +1,4 @@
+import androidx.compose.ui.Alignment
 package app.restora.pregnancytracker.ui.screens
 
 import android.app.DatePickerDialog
@@ -48,6 +49,7 @@ fun LanguageScreen(
         BloomOrb(
             value = stringResource(R.string.welcome_hello),
             label = stringResource(R.string.welcome_tagline),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 230.dp,
             height = 207.dp,
             valueSize = 73
@@ -136,8 +138,9 @@ fun DueDateScreen(
         BloomOrb(
             value = dayValue,
             label = monthValue,
-            width = 290.dp,
-            height = 261.dp,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            width = 250.dp,
+            height = 225.dp,
             valueSize = 84
         )
 
