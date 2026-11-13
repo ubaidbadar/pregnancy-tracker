@@ -520,7 +520,6 @@ fun BloomApp() {
                             language = language
                         )
                         BloomScreen.ME -> MeScreen(
-                            nickname = nickname,
                             userLabel = userLabel,
                             partnerLabel = partnerLabel,
                             language = language,
