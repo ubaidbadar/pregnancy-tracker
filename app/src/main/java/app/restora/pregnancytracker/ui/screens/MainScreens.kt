@@ -637,7 +637,19 @@ fun MeScreen(
     var showLanguageDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     val palette = LocalBloomPalette.current
-    val labels = listOf(userLabel, partnerLabel).filter { it.isNotBlank() && it != "Skip" && it != "No label" }
+    val userLabelText = when (userLabel) {
+        "Mum" -> stringResource(R.string.label_mum)
+        "Mama" -> stringResource(R.string.label_mama)
+        "Parent" -> stringResource(R.string.label_parent)
+        else -> ""
+    }
+    val partnerLabelText = when (partnerLabel) {
+        "Partner" -> stringResource(R.string.label_partner)
+        "Husband" -> stringResource(R.string.label_husband)
+        "Wife" -> stringResource(R.string.label_wife)
+        else -> ""
+    }
+    val labels = listOf(userLabelText, partnerLabelText).filter { it.isNotBlank() }
     val labelsText = if (labels.isEmpty()) stringResource(R.string.label_none) else labels.joinToString(", ")
 
     BloomPage {
