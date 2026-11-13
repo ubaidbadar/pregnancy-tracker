@@ -41,6 +41,35 @@ that satisfies the actual requirement, preserves correct behavior,
 respects Bloom’s product principles, and is straightforward to test.
 Fewer lines or more abstractions do not automatically mean better code.
 
+### Greenfield project baseline
+
+This repository starts as a **new Android Studio project**. Its initial
+`MainActivity.kt` may display `Greeting("Android")`; its theme may still
+contain generated Material purple colors and `dynamicColor = true`; and
+its test source sets may contain `ExampleUnitTest` or
+`ExampleInstrumentedTest`. These are normal starter artifacts, not
+application defects, regressions, or evidence that a Bloom feature is
+broken. They indicate that product implementation has not yet replaced
+the template.
+
+- Do not report the starter greeting, generated theme, missing product
+  screens, or template tests as defects merely because they are still
+  present in an untouched scaffold.
+- Build Bloom from the approved design system and full-flow reference.
+  Replace starter UI and theme code as the relevant product work is
+  implemented; do not pretend the prototype is already implemented.
+- Do not assume existing navigation, domain models, persistence, APIs,
+  authentication, notifications, billing, analytics, sharing, or
+  backend services. Inspect the repository and introduce only what an
+  approved feature actually requires.
+- Do not import code, architecture, endpoints, conventions, or product
+  behavior from unrelated applications.
+- Keep the initial project lean. Do not add layers, frameworks, or
+  dependencies speculatively; let real feature requirements justify
+  structure.
+- Treat the checked-in Gradle configuration and version catalog as the
+  source of truth for installed toolchain and dependency versions.
+
 The developer is experienced with React/TypeScript and less familiar
 with Kotlin. Do not imitate React at the expense of correct Kotlin.
 Explain only non-obvious Kotlin/Android decisions with a short
@@ -48,17 +77,20 @@ React/JavaScript analogy.
 
 ## 1. Product references and source of truth
 
-The project may be accompanied by these product references:
+The canonical product references are committed in this repository:
 
-- **`Bloom Design System.html`** — visual and interaction design
-  authority. It is version 1, dated 13 November 2026, Android-first.
-- **`Bloom full app flow.html`** — a 21-screen visual product-flow
-  reference.
+- **`ui-instuctions/Bloom Design System.html`** — visual and interaction
+  design authority. It is version 1, dated 13 November 2026,
+  Android-first.
+- **`ui-instuctions/Bloom full app flow.html`** — a 21-screen visual
+  product-flow reference.
 
-Inspect these files when they are available in the workspace or supplied
-with the task. Do not assume they are committed to the repository. If
-they are not available, use this skill’s summarized requirements and
-inspect the actual app.
+Read these files before implementing or changing Bloom UI and product
+flows. If a particular task workspace does not contain the files or
+they cannot be accessed, use this skill’s summarized requirements and
+state that the source references were unavailable. Do not assume that
+an old attachment or remembered copy is more current than the files
+committed to the target branch.
 
 Keep two kinds of truth separate:
 
@@ -239,11 +271,15 @@ remain understandable and gentle under these conditions.
 
 ### Visibly private
 
-The design reference uses: **“Stored on this phone. No ads. Nothing
-sold.”**
+The Bloom Design System explicitly specifies: **“Stored on this phone.
+No ads.”** The full-flow HTML is a separate prototype reference. If it
+contains additional or different privacy wording, preserve the source
+distinction and surface the discrepancy rather than silently combining
+or expanding the promise. Use the wording approved for the screen being
+implemented.
 
-Treat this as a product promise that the implementation must actually
-support: - Inspect persistence, network calls, analytics, crash
+Treat every privacy statement as a product promise that the
+implementation must actually support: - Inspect persistence, network calls, analytics, crash
 reporting, backups, exports, and third-party SDKs before claiming data
 is local-only. - Do not add ads, tracking SDKs, cloud sync, telemetry,
 or new sensitive-data transmission without explicit product approval and
@@ -358,8 +394,12 @@ white.
 colors, no trimester season color, no decorative motion, no upsell, and
 no cross-promotion.
 
-“Match my phone” dynamic color is described as an optional later toggle.
-Do not implement it by default. It never applies to Quiet.
+Android Studio's generated Compose theme may enable dynamic color and
+use generic Material colors. Those are starter defaults, not Bloom
+design decisions. Implement Bloom's explicit color tokens for product
+screens and keep dynamic color disabled by default. “Match my phone” is
+described only as an optional later toggle; implement it only after
+explicit product approval, and never apply it to Quiet.
 
 ### Color tokens
 
