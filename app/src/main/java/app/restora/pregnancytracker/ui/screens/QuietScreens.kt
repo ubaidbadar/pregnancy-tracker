@@ -103,6 +103,7 @@ fun PauseScreen(
     onDelete: () -> Unit
 ) {
     var showDeleteConfirmation by rememberSaveable { mutableStateOf(false) }
+    var showChangedDialog by rememberSaveable { mutableStateOf(false) }
     BloomPage {
         Spacer(Modifier.height(8.dp))
         BloomPageTitle(stringResource(R.string.quiet_title), size = 32)
@@ -124,7 +125,7 @@ fun PauseScreen(
         QuietChoice(
             title = stringResource(R.string.changed_situation),
             description = stringResource(R.string.changed_situation_description),
-            onClick = onChanged
+            onClick = { showChangedDialog = true }
         )
         QuietChoice(
             title = stringResource(R.string.delete_everything),
@@ -144,6 +145,15 @@ fun PauseScreen(
         QuietDeleteDialog(
             onDismiss = { showDeleteConfirmation = false },
             onConfirm = onDelete
+        )
+    }
+    if (showChangedDialog) {
+        QuietInfoDialog(
+            title = stringResource(R.string.changed_situation),
+            message = stringResource(R.string.changed_situation_body),
+            confirmLabel = stringResource(R.string.keep_my_data),
+            onDismiss = { showChangedDialog = false },
+            onConfirm = onChanged
         )
     }
 }
