@@ -122,6 +122,8 @@
     <string name="discreet_mode">Discreet mode</string>
     <string name="not_active">Not active</string>
     <string name="export_my_data">Export my data</string>
+    <string name="export_saved">Your data export was saved.</string>
+    <string name="export_failed">Could not save your data export. Please try again.</string>
     <string name="delete_everything">Delete everything</string>
     <string name="language">Language</string>
     <string name="labels">Labels</string>
