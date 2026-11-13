@@ -53,7 +53,6 @@ import app.restora.pregnancytracker.ui.theme.BloomSeason
 import app.restora.pregnancytracker.ui.theme.BloomTheme
 import app.restora.pregnancytracker.ui.theme.BloomThemeMode
 import kotlinx.coroutines.delay
-import java.util.Calendar
 import java.util.Locale
 
 private const val PREFERENCES_NAME = "bloom_local_preferences"
