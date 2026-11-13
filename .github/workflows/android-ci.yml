@@ -30,7 +30,7 @@ jobs:
           packages: platform-tools
 
       - name: Install compile SDK
-        run: sdkmanager "platforms;android-37"
+        run: sdkmanager --channel=3 "platforms;android-37"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
