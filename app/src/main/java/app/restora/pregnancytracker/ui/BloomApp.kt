@@ -290,9 +290,10 @@ fun BloomApp() {
         }
     }
 
-    val themeMode = when (screen) {
-        BloomScreen.CONTRACTION_TIMER -> BloomThemeMode.NIGHT
-        BloomScreen.PAUSE_OR_END, BloomScreen.LOSS_CONFIRMATION -> BloomThemeMode.QUIET
+    val themeMode = when {
+        screen == BloomScreen.CONTRACTION_TIMER -> BloomThemeMode.NIGHT
+        screen == BloomScreen.PAUSE_OR_END || screen == BloomScreen.LOSS_CONFIRMATION -> BloomThemeMode.QUIET
+        screen == BloomScreen.TODAY && (pregnancyEnded || pregnancyArchived) -> BloomThemeMode.QUIET
         else -> BloomThemeMode.DAWN
     }
 
