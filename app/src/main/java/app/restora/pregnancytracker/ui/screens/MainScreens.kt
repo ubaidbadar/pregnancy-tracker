@@ -623,7 +623,6 @@ fun TogetherScreen(
 
 @Composable
 fun MeScreen(
-    nickname: String,
     userLabel: String,
     partnerLabel: String,
     language: String,
