@@ -297,7 +297,11 @@ fun BloomOrb(
             drawPath(
                 outer,
                 Brush.radialGradient(
-                    colors = listOf(Color(0xFFFFF1E4), Color(0xFFF7B98F)),
+                    colors = listOf(
+                        Color.White.copy(alpha = 0.9f),
+                        palette.tint,
+                        palette.primary.copy(alpha = 0.18f)
+                    ),
                     center = Offset(w * 0.4f, h * 0.35f),
                     radius = maxOf(w, h) * 0.85f
                 )
