@@ -334,16 +334,17 @@ fun BloomApp() {
     }
 
     val themeMode = when {
+        pregnancyEnded -> BloomThemeMode.QUIET
         screen == BloomScreen.CONTRACTION_TIMER -> BloomThemeMode.NIGHT
         screen == BloomScreen.PAUSE_OR_END || screen == BloomScreen.LOSS_CONFIRMATION -> BloomThemeMode.QUIET
-        screen == BloomScreen.TODAY && (pregnancyEnded || pregnancyArchived) -> BloomThemeMode.QUIET
+        screen == BloomScreen.TODAY && pregnancyArchived -> BloomThemeMode.QUIET
         else -> BloomThemeMode.DAWN
     }
 
     BloomLocaleProvider(language) {
         // Apricot is the Dawn visual fallback; trimester mapping waits for an approved date rule.
         BloomTheme(mode = themeMode, season = BloomSeason.APRICOT) {
-            val bottomBarVisible = screen in setOf(
+            val bottomBarVisible = !pregnancyEnded && screen in setOf(
                 BloomScreen.TODAY,
                 BloomScreen.CHECK_IN_DONE,
                 BloomScreen.TOOLS,
@@ -524,6 +525,7 @@ fun BloomApp() {
                             userLabel = userLabel,
                             partnerLabel = partnerLabel,
                             language = language,
+                            quietMode = pregnancyEnded,
                             onLanguageChange = ::selectLanguage,
                             onExport = { exportLauncher.launch("bloom-data.txt") },
                             onPauseOrEnd = { navigate(BloomScreen.PAUSE_OR_END) },
