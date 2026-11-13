@@ -567,12 +567,13 @@ fun JournalScreen(
 
 @Composable
 fun TogetherScreen(
-    dueDateMillis: Long
+    dueDateMillis: Long,
+    language: String
 ) {
     var showSharingInfo by rememberSaveable { mutableStateOf(false) }
     val palette = LocalBloomPalette.current
     val dateLabel = if (dueDateMillis > 0L) {
-        SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(Date(dueDateMillis))
+        SimpleDateFormat("d MMMM yyyy", Locale.forLanguageTag(language)).format(Date(dueDateMillis))
     } else {
         stringResource(R.string.due_date_not_set)
     }
