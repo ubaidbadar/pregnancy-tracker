@@ -109,6 +109,7 @@ fun TodayScreen(
         BloomOrb(
             value = dayValue,
             label = stringResource(R.string.due_date_short) + " · " + dateLabel,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 260.dp,
             height = 234.dp,
             valueSize = 83
@@ -253,6 +254,7 @@ fun CheckInDoneScreen(
         BloomOrb(
             value = stringResource(R.string.checkin_saved_value),
             label = stringResource(R.string.today_label),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 200.dp,
             height = 180.dp,
             valueSize = 58
@@ -290,6 +292,7 @@ fun WeekStoryScreen(
         BloomOrb(
             value = stringResource(R.string.week_story_mark),
             label = stringResource(R.string.week_story_label),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 210.dp,
             height = 189.dp,
             valueSize = 48
@@ -581,6 +584,7 @@ fun TogetherScreen(
         BloomOrb(
             value = stringResource(R.string.together_mark),
             label = dateLabel,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 210.dp,
             height = 189.dp,
             valueSize = 67
