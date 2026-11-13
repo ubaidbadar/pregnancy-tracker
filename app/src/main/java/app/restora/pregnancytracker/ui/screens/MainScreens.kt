@@ -150,8 +150,9 @@ fun TodayScreen(
             }
         }
 
-        BloomCard {
-            BloomSectionLabel(stringResource(R.string.today_label))
+        if (!pregnancyEnded && !pregnancyArchived) {
+            BloomCard {
+                BloomSectionLabel(stringResource(R.string.today_label))
             Text(
                 text = stringResource(R.string.how_are_you_today),
                 color = palette.ink,
@@ -214,12 +215,13 @@ fun TodayScreen(
             )
         }
 
-        BloomTextButton(
-            text = stringResource(R.string.open_week_story),
-            onClick = onWeekStory,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            color = palette.deep
-        )
+            BloomTextButton(
+                text = stringResource(R.string.open_week_story),
+                onClick = onWeekStory,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                color = palette.deep
+            )
+        }
     }
 }
 
