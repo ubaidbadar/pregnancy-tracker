@@ -45,9 +45,9 @@
     <string name="tracking_ended_title">Pregnancy tracking has ended</string>
     <string name="pregnancy_archived_title">This pregnancy is archived</string>
     <string name="data_remains_on_device">Your information remains on this phone.</string>
-    <string name="tracking_paused_title">Tracking is paused</string>
-    <string name="tracking_paused_body">Pregnancy updates are paused. Your saved information remains on this phone.</string>
-    <string name="resume_tracking">Resume tracking</string>
+    <string name="tracking_paused_title">Updates are paused</string>
+    <string name="tracking_paused_body">Pregnancy updates are paused. Your saved information remains on this phone. You can still use your private notes and tools.</string>
+    <string name="resume_tracking">Resume updates</string>
     <string name="checkin_thanks">Thanks for checking in</string>
     <string name="checkin_saved_value">✓</string>
     <string name="checkin_logged">Today, logged</string>
