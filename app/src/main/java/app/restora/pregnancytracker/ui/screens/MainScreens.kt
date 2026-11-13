@@ -31,6 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.window.Dialog
 import app.restora.pregnancytracker.R
 import app.restora.pregnancytracker.ui.components.BloomButton
@@ -95,7 +98,8 @@ fun TodayScreen(
             Surface(
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable(onClick = onProfile),
+                    .clickable(role = Role.Button, onClick = onProfile)
+                    .semantics { contentDescription = stringResource(R.string.open_profile) },
                 shape = CircleShape,
                 color = palette.surface,
                 shadowElevation = 3.dp
