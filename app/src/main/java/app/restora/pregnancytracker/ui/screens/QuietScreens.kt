@@ -238,6 +238,7 @@ fun BabyArrivedScreen(
         BloomOrb(
             value = stringResource(R.string.baby_arrived_hello),
             label = stringResource(R.string.baby_is_here),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             width = 260.dp,
             height = 234.dp,
             valueSize = 70
