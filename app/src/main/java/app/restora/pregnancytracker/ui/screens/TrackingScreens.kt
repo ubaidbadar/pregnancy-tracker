@@ -1,6 +1,10 @@
 package app.restora.pregnancytracker.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -137,6 +141,7 @@ fun KickSummaryScreen(
 fun ContractionTimerScreen(
     elapsedSeconds: Long,
     lastGapSeconds: Long,
+    durations: List<Long>,
     isRunning: Boolean,
     onStart: () -> Unit,
     onStop: () -> Unit,
@@ -169,18 +174,40 @@ fun ContractionTimerScreen(
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(90.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(R.string.contraction_intervals_hint),
-                color = palette.muted,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
-            )
+        if (durations.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(90.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.contraction_intervals_hint),
+                    color = palette.muted,
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center
+                )
+            }
+        } else {
+            val maxDuration = durations.maxOrNull()?.coerceAtLeast(1L) ?: 1L
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(90.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                durations.takeLast(8).forEach { duration ->
+                    val barHeight = (20f + 60f * duration.toFloat() / maxDuration.toFloat()).dp
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(barHeight)
+                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                            .background(palette.primary.copy(alpha = 0.78f))
+                    )
+                }
+            }
         }
         Spacer(Modifier.height(8.dp))
         Surface(
