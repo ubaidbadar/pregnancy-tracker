@@ -116,6 +116,7 @@ private fun LanguageChoice(
 @Composable
 fun DueDateScreen(
     dueDateMillis: Long,
+    language: String,
     onDateSelected: (Long) -> Unit,
     onContinue: () -> Unit
 ) {
@@ -123,10 +124,10 @@ fun DueDateScreen(
     val palette = LocalBloomPalette.current
     val selectedDate = if (dueDateMillis > 0L) Date(dueDateMillis) else null
     val dayValue = selectedDate?.let {
-        SimpleDateFormat("d", Locale.getDefault()).format(it)
+        SimpleDateFormat("d", Locale.forLanguageTag(language)).format(it)
     } ?: "—"
     val monthValue = selectedDate?.let {
-        SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(it)
+        SimpleDateFormat("MMMM yyyy", Locale.forLanguageTag(language)).format(it)
     } ?: stringResource(R.string.choose_due_date)
 
     BloomPage {
@@ -169,7 +170,7 @@ fun DueDateScreen(
         ) {
             Text(
                 text = selectedDate?.let {
-                    SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(it)
+                    SimpleDateFormat("d MMMM yyyy", Locale.forLanguageTag(language)).format(it)
                 } ?: stringResource(R.string.choose_due_date),
                 modifier = Modifier.padding(horizontal = 18.dp, vertical = 18.dp),
                 color = if (selectedDate != null) palette.ink else palette.muted,
