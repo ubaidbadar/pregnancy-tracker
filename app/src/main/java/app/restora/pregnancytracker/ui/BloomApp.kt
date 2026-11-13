@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import app.restora.pregnancytracker.R
 import app.restora.pregnancytracker.ui.components.BloomBottomBar
@@ -320,10 +321,10 @@ fun BloomApp() {
                         BloomBottomBar(
                             selected = selectedTab,
                             labels = listOf(
-                                context.getString(R.string.nav_today),
-                                context.getString(R.string.nav_journal),
-                                context.getString(R.string.nav_tools),
-                                context.getString(R.string.nav_plan)
+                                stringResource(R.string.nav_today),
+                                stringResource(R.string.nav_journal),
+                                stringResource(R.string.nav_tools),
+                                stringResource(R.string.nav_plan)
                             ),
                             onSelect = { tab ->
                                 when (tab) {
@@ -350,6 +351,7 @@ fun BloomApp() {
                         )
                         BloomScreen.DUE_DATE -> DueDateScreen(
                             dueDateMillis = dueDateMillis,
+                            language = language,
                             onDateSelected = ::saveDueDate,
                             onContinue = { navigate(BloomScreen.NAME_AND_LABEL) }
                         )
@@ -364,6 +366,7 @@ fun BloomApp() {
                         )
                         BloomScreen.TODAY -> TodayScreen(
                             dueDateMillis = dueDateMillis,
+                            language = language,
                             nickname = nickname,
                             mood = mood,
                             trackingPaused = trackingPaused,
@@ -490,7 +493,8 @@ fun BloomApp() {
                             }
                         )
                         BloomScreen.TOGETHER -> TogetherScreen(
-                            dueDateMillis = dueDateMillis
+                            dueDateMillis = dueDateMillis,
+                            language = language
                         )
                         BloomScreen.ME -> MeScreen(
                             nickname = nickname,
