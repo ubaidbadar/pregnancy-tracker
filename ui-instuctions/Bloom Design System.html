@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bloom Design System</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#FFF8F3;--sf:#FFFFFF;--rs:#F7EBE4;--tx:#2B2024;--mu:#6B5B61;--ac:#B4531A;--at:#FFE6D2;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1C1519;--sf:#271D23;--rs:#33262D;--tx:#F2E6EA;--mu:#C9B8BF;--ac:#FFB68A;--at:#3A2A24;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/24px Figtree,system-ui,sans-serif}
+main{max-width:960px;margin:0 auto;padding:24px 20px 64px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;margin:0}
+h1{font-size:44px;line-height:50px}h2{font-size:28px;line-height:34px;margin:48px 0 12px}h3{font-size:20px;line-height:26px;margin:20px 0 8px}
+p{margin:0 0 12px}.mu{color:var(--mu)}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.c{background:var(--sf);border-radius:24px;padding:16px}
+.sw{height:64px;border-radius:16px;margin-bottom:8px}
+.sw+b,.c b{display:block}small{font-size:13px;line-height:18px;color:var(--mu)}
+.w{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:560px}td,th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rs);vertical-align:top}
+.bt{min-height:48px;padding:0 24px;border:0;border-radius:28px;background:var(--ac);color:#fff;font:600 16px Figtree,sans-serif}
+:root[data-theme="dark"] .bt{color:#1C1519}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bt{color:#1C1519}}
+.bt.o{background:transparent;color:var(--ac);border:2px solid var(--ac)}
+.ch{display:inline-block;padding:8px 14px;border-radius:20px;background:var(--at);color:var(--ac);font:600 14px/20px Figtree,sans-serif;margin:0 6px 6px 0}
+.sh{width:56px;height:56px;background:var(--at);margin:0 auto 6px}
+pre{background:var(--rs);padding:16px;border-radius:16px;overflow-x:auto;font-size:13px;line-height:20px}
+</style>
+</head>
+<body>
+<main>
+<p class="mu">Design system v1 · 13 November 2026 · Android first</p>
+<h1>Bloom</h1>
+<p>A warm, calm, tactile system for a pregnancy app. Expressive in type, shape and motion where it matters, quiet everywhere else. One theme file, many languages.</p>
+
+<h2>1. Principles</h2>
+<div class="g">
+<div class="c"><b>Worst day first</b><small>Tired, one hand, 3 am, or after a loss.</small></div>
+<div class="c"><b>One focal point</b><small>One main action per screen.</small></div>
+<div class="c"><b>No guilt</b><small>No streaks, scores or red warnings.</small></div>
+<div class="c"><b>Visibly private</b><small>“Stored on this phone. No ads.”</small></div>
+<div class="c"><b>Inclusive</b><small>User-chosen labels. No assumed roles.</small></div>
+<div class="c"><b>Local</b><small>Every language is a first-class layout.</small></div>
+</div>
+
+<h2>2. Color</h2>
+<h3>Dawn (light)</h3>
+<div class="g">
+<div class="c"><div class="sw" style="background:#FFF8F3;border:1px solid #EBCDB8"></div><b>Paper</b><small>#FFF8F3 · background</small></div>
+<div class="c"><div class="sw" style="background:#FFFFFF;border:1px solid #EBCDB8"></div><b>Surface</b><small>#FFFFFF · cards</small></div>
+<div class="c"><div class="sw" style="background:#F7EBE4"></div><b>Raised</b><small>#F7EBE4</small></div>
+<div class="c"><div class="sw" style="background:#2B2024"></div><b>Ink</b><small>#2B2024 · text</small></div>
+<div class="c"><div class="sw" style="background:#6B5B61"></div><b>Muted</b><small>#6B5B61 · about 6:1 on paper</small></div>
+<div class="c"><div class="sw" style="background:#A3263A"></div><b>Error</b><small>#A3263A · always with icon and words</small></div>
+</div>
+<h3>Trimester seasons (primary / tint / deep)</h3>
+<div class="g">
+<div class="c"><div class="sw" style="background:#1F7A78"></div><div class="sw" style="background:#DDF1EE"></div><b>Lagoon · T1</b><small>#1F7A78 / #DDF1EE / #14504E</small></div>
+<div class="c"><div class="sw" style="background:#B4531A"></div><div class="sw" style="background:#FFE6D2"></div><b>Apricot · T2</b><small>#B4531A / #FFE6D2 / #7A3510</small></div>
+<div class="c"><div class="sw" style="background:#6E3B8E"></div><div class="sw" style="background:#EBDDF5"></div><b>Dusk · T3</b><small>#6E3B8E / #EBDDF5 / #4A2562</small></div>
+</div>
+<p class="mu">White text on each primary is about 5:1 or higher. Tints fill large shapes; primaries are for buttons and key text.</p>
+<h3>Quiet and Night</h3>
+<div class="g">
+<div class="c"><div class="sw" style="background:#E9ECEF"></div><div class="sw" style="background:#5E666F"></div><b>Quiet</b><small>Stone on #E9ECEF. Pause and loss flows. No season color, no decorative motion.</small></div>
+<div class="c"><div class="sw" style="background:#1C1519"></div><div class="sw" style="background:#271D23"></div><b>Night</b><small>#1C1519 / #271D23, text #F2E6EA. Accents #7FD3CC, #FFB68A, #D3B3F0. No pure white.</small></div>
+</div>
+<p class="mu">Rule: color is never the only signal. Check every theme for contrast (4.5:1 text, 3:1 large text and icons). “Match my phone” dynamic color is an optional later toggle and never applies to Quiet.</p>
+
+<h2>3. Typography</h2>
+<div class="c"><div style="font:600 56px/60px Fraunces,serif">18</div><div style="font:600 28px/34px Fraunces,serif">Your body is making room</div><div style="font:600 20px/26px Figtree,sans-serif">Midwife check-up</div><p style="margin:8px 0 0">Body text sits at 16/24 and stays calm and legible.</p><small>Label 14/20</small></div>
+<div class="w"><table>
+<tr><th>Role</th><th>Size / line</th><th>Latin</th></tr>
+<tr><td>Display</td><td>56/60</td><td>Fraunces 600</td></tr>
+<tr><td>Headline</td><td>28/34</td><td>Fraunces 600</td></tr>
+<tr><td>Title</td><td>20/26</td><td>Figtree 600</td></tr>
+<tr><td>Body</td><td>16/24</td><td>Figtree 400</td></tr>
+<tr><td>Label</td><td>14/20</td><td>Figtree 600</td></tr>
+</table></div>
+<p class="mu">Support system font scale up to 200% without clipping. Fonts are a taste decision and easy to swap (both are OFL).</p>
+
+<h2>4. Languages and localization</h2>
+<p>Every string lives in a resource file and no screen hard-codes text, so a language is added by translating strings and choosing a script font, not by redesigning screens. Which languages launch is a product decision. I would choose them from your user data, then add more in the same way.</p>
+<div class="w"><table>
+<tr><th>Script</th><th>Direction</th><th>UI font</th><th>Display font</th><th>Notes</th></tr>
+<tr><td>Latin (English and others)</td><td>LTR</td><td>Figtree</td><td>Fraunces</td><td>Default</td></tr>
+<tr><td>Urdu</td><td>RTL</td><td>Noto Naskh Arabic</td><td>Noto Nastaliq Urdu, large text only</td><td>Extra line height; no wrap-content boxes for Nastaliq; test clipping on low-end phones</td></tr>
+<tr><td>Arabic, Persian, Pashto, Sindhi</td><td>RTL</td><td>Noto Naskh Arabic</td><td>Same as UI</td><td>Needs native review of letter forms and digits</td></tr>
+<tr><td>Devanagari (Hindi), Bengali, Gurmukhi and similar</td><td>LTR</td><td>Matching Noto Sans family</td><td>Same as UI</td><td>Taller line height; check conjuncts</td></tr>
+</table></div>
+<h3>Rules</h3>
+<ul>
+<li><b>Direction:</b> use start/end, never left/right. Mirror layouts, nav order, progress bars and back arrows. Do not mirror numerals, the Bloom shape, or media icons.</li>
+<li><b>Length:</b> design for text 30–40% longer than English, with no fixed-width buttons.</li>
+<li><b>Numbers and dates:</b> format with the locale. Let the user choose the numeral style and calendar.</li>
+<li><b>Plurals and gender:</b> use ICU message formats. Offer neutral phrasing, since many languages gender “you”.</li>
+<li><b>Language switch:</b> in onboarding and in Me, and it applies instantly. Support the system per-app language setting.</li>
+<li><b>Baby-size comparisons:</b> a regional food set per language or region (for example mango, guava, pomegranate for South Asia).</li>
+<li><b>Content:</b> medical text is translated by a qualified reviewer, never machine-only.</li>
+<li><b>Fallback:</b> missing strings fall back to English and are flagged in testing.</li>
+</ul>
+
+<h2>5. Shape</h2>
+<p>Radius scale: 12, 20, 28, 40, full pill. Shape set for moods, badges and the Bloom:</p>
+<div class="g" style="text-align:center">
+<div class="c"><div class="sh" style="border-radius:50%"></div><small>Circle</small></div>
+<div class="c"><div class="sh" style="border-radius:20px"></div><small>Soft square</small></div>
+<div class="c"><div class="sh" style="border-radius:42% 58% 42% 58%"></div><small>Pebble</small></div>
+<div class="c"><div class="sh" style="border-radius:50% 50% 14px 14px"></div><small>Arch</small></div>
+<div class="c"><div class="sh" style="border-radius:60% 40% 55% 45%"></div><small>Bloom blob</small></div>
+</div>
+<p class="mu">Presses and selections morph the shape (a circle becomes a flower). Mood shapes always carry a text label.</p>
+
+<h2>6. Layout, targets and elevation</h2>
+<ul>
+<li>4-point spacing grid. 20 px side margins on a 390 px screen.</li>
+<li>Touch targets at least 48 dp with 8 dp between targets. Primary actions sit in the bottom 40% of the screen.</li>
+<li>Bottom navigation: Today, Journal, Tools, Plan, each with icon and label. Profile sits behind an avatar button.</li>
+<li>Elevation: soft tinted shadow (0 10 28, 10% season deep tone) on cards. Sheets and nav bars use a top shadow.</li>
+</ul>
+
+<h2>7. Components</h2>
+<div class="c"><button class="bt">Primary</button> <button class="bt o">Secondary</button> <span class="ch">Chip</span><span class="ch">Iron levels</span><span class="ch">Scan date</span></div>
+<ul>
+<li><b>Buttons:</b> pill, 56 px high for primary and 48 px minimum otherwise. One primary per screen.</li>
+<li><b>Chips:</b> 20 px radius, 14/20 label. Used for symptoms, questions and labels.</li>
+<li><b>Mood shapes:</b> five shapes with text labels, 48 px, one tap, no score.</li>
+<li><b>Cards:</b> 28 px radius, white surface, one idea each. Only one Today card at a time.</li>
+<li><b>Inputs:</b> 56–60 px high, 2 px outline, label above, never placeholder-only.</li>
+<li><b>Bottom sheet:</b> 32 px top radius. Used for Premium and quick actions.</li>
+<li><b>Progress segments:</b> 4 px bars for onboarding and Week stories.</li>
+<li><b>States:</b> default, pressed (shape morph), focused (3 px outline), disabled (60% with a label), error (icon, words and #A3263A).</li>
+</ul>
+
+<h2>8. Motion and haptics</h2>
+<ul>
+<li>Spring motion, 200–400 ms for presses, selections and sheets. The Bloom morph is about 600 ms.</li>
+<li>One slow ambient animation at most (the Bloom breathes). Everything else responds to the user.</li>
+<li>Soft haptic on kick taps and contraction start and stop. Never for marketing.</li>
+<li>Respect reduce-motion: use fades and stop ambient animation. No flashing. Sound is off by default.</li>
+</ul>
+
+<h2>9. Icons and illustration</h2>
+<ul>
+<li>Rounded 2 dp stroke icons at 24 dp, always with a text label in navigation.</li>
+<li>Flat, grainy shapes. No faces, no skin tones, no gendered colors, no stock baby photos.</li>
+<li>Local food illustrations for baby-size art, commissioned or licensed per region.</li>
+</ul>
+
+<h2>10. Voice</h2>
+<div class="w"><table>
+<tr><th>Say</th><th>Avoid</th></tr>
+<tr><td>You’re 18 weeks and 3 days.</td><td>Amazing job tracking!</td></tr>
+<tr><td>Nothing logged yesterday. That’s fine.</td><td>You broke your streak.</td></tr>
+<tr><td>Ask your midwife about this.</td><td>This could be dangerous.</td></tr>
+<tr><td>Take whatever you need.</td><td>Are you sure you want to stop?</td></tr>
+</table></div>
+<p class="mu">Never tell the user what a good result is for weight or kicks. Warning-sign text comes only from your medical reviewer.</p>
+
+<h2>11. Themes in use</h2>
+<ul>
+<li><b>Dawn:</b> default. Season color follows the trimester.</li>
+<li><b>Night:</b> automatic, plus a one-tap switch on the contraction timer.</li>
+<li><b>Quiet:</b> forced for pause and loss. No upsell and no cross-promotion.</li>
+</ul>
+
+<h2>12. Accessibility checklist</h2>
+<ul>
+<li>Contrast 4.5:1 for text and 3:1 for large text and icons, checked in every theme.</li>
+<li>TalkBack labels on every icon button, logical focus order, moods announced by label.</li>
+<li>Font scale 200% and large display size without clipping.</li>
+<li>One-handed test with a thumb, and a night-time contraction task test.</li>
+</ul>
+
+<h2>13. Tokens (starter)</h2>
+<pre>{
+  "color": { "paper":"#FFF8F3", "surface":"#FFFFFF", "raised":"#F7EBE4",
+    "ink":"#2B2024", "muted":"#6B5B61", "error":"#A3263A",
+    "t1":{"primary":"#1F7A78","tint":"#DDF1EE","deep":"#14504E"},
+    "t2":{"primary":"#B4531A","tint":"#FFE6D2","deep":"#7A3510"},
+    "t3":{"primary":"#6E3B8E","tint":"#EBDDF5","deep":"#4A2562"},
+    "quiet":{"bg":"#E9ECEF","accent":"#5E666F"},
+    "night":{"bg":"#1C1519","surface":"#271D23","text":"#F2E6EA"} },
+  "radius": [12, 20, 28, 40, 999],
+  "space": [4, 8, 12, 16, 20, 24, 32],
+  "type": { "display":[56,60], "headline":[28,34], "title":[20,26], "body":[16,24], "label":[14,20] },
+  "touch": { "min": 48, "gap": 8 },
+  "motion": { "press": 200, "sheet": 400, "bloom": 600 }
+}</pre>
+</main>
+</body>
+</html>
