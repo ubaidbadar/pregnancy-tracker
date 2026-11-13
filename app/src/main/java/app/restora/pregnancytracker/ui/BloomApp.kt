@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.SystemClock
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,6 +58,7 @@ import app.restora.pregnancytracker.ui.theme.BloomSeason
 import app.restora.pregnancytracker.ui.theme.BloomTheme
 import app.restora.pregnancytracker.ui.theme.BloomThemeMode
 import kotlinx.coroutines.delay
+import java.io.IOException
 import java.util.Locale
 
 private const val PREFERENCES_NAME = "bloom_local_preferences"
@@ -286,10 +288,18 @@ fun BloomApp() {
         contract = ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         if (uri != null) {
-            runCatching {
-                context.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { writer ->
-                    writer.write(exportText)
+            try {
+                val output = context.contentResolver.openOutputStream(uri)
+                if (output == null) {
+                    Toast.makeText(context, R.string.export_failed, Toast.LENGTH_LONG).show()
+                } else {
+                    output.bufferedWriter().use { writer -> writer.write(exportText) }
+                    Toast.makeText(context, R.string.export_saved, Toast.LENGTH_SHORT).show()
                 }
+            } catch (error: IOException) {
+                Toast.makeText(context, R.string.export_failed, Toast.LENGTH_LONG).show()
+            } catch (error: SecurityException) {
+                Toast.makeText(context, R.string.export_failed, Toast.LENGTH_LONG).show()
             }
         }
     }
