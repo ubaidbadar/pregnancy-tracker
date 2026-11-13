@@ -142,7 +142,8 @@ fun BloomApp() {
     var kickActive by rememberSaveable { mutableStateOf(false) }
 
     var contractionStartedAt by rememberSaveable { mutableLongStateOf(0L) }
-    var contractionLastStartedAt by rememberSaveable { mutableLongStateOf(0L) }
+    var contractionLastStoppedAt by rememberSaveable { mutableLongStateOf(0L) }
+    var contractionDurations by rememberSaveable { mutableStateOf("") }
     var contractionElapsedSeconds by rememberSaveable { mutableLongStateOf(0L) }
     var contractionLastGapSeconds by rememberSaveable { mutableLongStateOf(0L) }
     var contractionActive by rememberSaveable { mutableStateOf(false) }
@@ -151,6 +152,18 @@ fun BloomApp() {
         if (screenName != destination.name) {
             previousScreenName = screenName
             screenName = destination.name
+        }
+    }
+
+    fun stopContraction() {
+        if (contractionActive) {
+            val now = SystemClock.elapsedRealtime()
+            contractionElapsedSeconds = ((now - contractionStartedAt) / 1_000L).coerceAtLeast(0L)
+            contractionActive = false
+            contractionLastStoppedAt = now
+            contractionDurations = listOf(contractionDurations, contractionElapsedSeconds.toString())
+                .filter { it.isNotBlank() }
+                .joinToString(",")
         }
     }
 
@@ -195,7 +208,8 @@ fun BloomApp() {
         kickDurationSeconds = 0L
         kickActive = false
         contractionStartedAt = 0L
-        contractionLastStartedAt = 0L
+        contractionLastStoppedAt = 0L
+        contractionDurations = ""
         contractionElapsedSeconds = 0L
         contractionLastGapSeconds = 0L
         contractionActive = false
@@ -275,11 +289,7 @@ fun BloomApp() {
                 navigate(BloomScreen.TODAY)
             }
             BloomScreen.CONTRACTION_TIMER -> {
-                if (contractionActive) {
-                    contractionElapsedSeconds =
-                        ((SystemClock.elapsedRealtime() - contractionStartedAt) / 1_000L).coerceAtLeast(0L)
-                    contractionActive = false
-                }
+                stopContraction()
                 navigate(BloomScreen.TOOLS)
             }
             else -> {
@@ -451,22 +461,20 @@ fun BloomApp() {
                             isRunning = contractionActive,
                             onStart = {
                                 val now = SystemClock.elapsedRealtime()
-                                if (contractionLastStartedAt > 0L) {
+                                if (contractionLastStoppedAt > 0L) {
                                     contractionLastGapSeconds =
-                                        ((now - contractionLastStartedAt) / 1_000L).coerceAtLeast(0L)
+                                        ((now - contractionLastStoppedAt) / 1_000L).coerceAtLeast(0L)
                                 }
-                                contractionLastStartedAt = now
                                 contractionStartedAt = now
                                 contractionElapsedSeconds = 0L
                                 contractionActive = true
                             },
-                            onStop = {
-                                contractionElapsedSeconds =
-                                    ((SystemClock.elapsedRealtime() - contractionStartedAt) / 1_000L)
-                                        .coerceAtLeast(0L)
-                                contractionActive = false
-                            },
-                            onBack = { navigate(BloomScreen.TOOLS) }
+                            durations = contractionDurations.split(",").mapNotNull { it.toLongOrNull() },
+                            onStop = ::stopContraction,
+                            onBack = {
+                                stopContraction()
+                                navigate(BloomScreen.TOOLS)
+                            }
                         )
                         BloomScreen.PLAN -> PlanScreen(
                             appointment = appointment,
