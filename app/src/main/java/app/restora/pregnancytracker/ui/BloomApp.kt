@@ -316,6 +316,10 @@ fun BloomApp() {
             BloomScreen.KICK_COUNTER -> {
                 kickActive = false
                 kickDurationSeconds = kickElapsedSeconds
+                preferences.edit()
+                    .putLong("kick_count", kickCount)
+                    .putLong("kick_duration", kickDurationSeconds)
+                    .apply()
                 navigate(BloomScreen.TODAY)
             }
             BloomScreen.CONTRACTION_TIMER -> {
