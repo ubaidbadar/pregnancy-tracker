@@ -153,67 +153,67 @@ fun TodayScreen(
         if (!pregnancyEnded && !pregnancyArchived) {
             BloomCard {
                 BloomSectionLabel(stringResource(R.string.today_label))
-            Text(
-                text = stringResource(R.string.how_are_you_today),
-                color = palette.ink,
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                BloomMoodOption(
-                    label = stringResource(R.string.mood_calm),
-                    selected = mood == "Calm",
-                    index = 0,
-                    onClick = { onMoodSelected("Calm") },
-                    modifier = Modifier.weight(1f)
+                Text(
+                    text = stringResource(R.string.how_are_you_today),
+                    color = palette.ink,
+                    style = MaterialTheme.typography.headlineMedium
                 )
-                BloomMoodOption(
-                    label = stringResource(R.string.mood_okay),
-                    selected = mood == "Okay",
-                    index = 1,
-                    onClick = { onMoodSelected("Okay") },
-                    modifier = Modifier.weight(1f)
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    BloomMoodOption(
+                        label = stringResource(R.string.mood_calm),
+                        selected = mood == "Calm",
+                        index = 0,
+                        onClick = { onMoodSelected("Calm") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    BloomMoodOption(
+                        label = stringResource(R.string.mood_okay),
+                        selected = mood == "Okay",
+                        index = 1,
+                        onClick = { onMoodSelected("Okay") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    BloomMoodOption(
+                        label = stringResource(R.string.mood_tired),
+                        selected = mood == "Tired",
+                        index = 2,
+                        onClick = { onMoodSelected("Tired") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    BloomMoodOption(
+                        label = stringResource(R.string.mood_queasy),
+                        selected = mood == "Queasy",
+                        index = 3,
+                        onClick = { onMoodSelected("Queasy") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    BloomMoodOption(
+                        label = stringResource(R.string.mood_low),
+                        selected = mood == "Low",
+                        index = 4,
+                        onClick = { onMoodSelected("Low") },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                QuickAction(
+                    text = stringResource(R.string.kicks),
+                    modifier = Modifier.weight(1f),
+                    onClick = onKicks
                 )
-                BloomMoodOption(
-                    label = stringResource(R.string.mood_tired),
-                    selected = mood == "Tired",
-                    index = 2,
-                    onClick = { onMoodSelected("Tired") },
-                    modifier = Modifier.weight(1f)
+                QuickAction(
+                    text = stringResource(R.string.contractions),
+                    modifier = Modifier.weight(1f),
+                    onClick = onContractions
                 )
-                BloomMoodOption(
-                    label = stringResource(R.string.mood_queasy),
-                    selected = mood == "Queasy",
-                    index = 3,
-                    onClick = { onMoodSelected("Queasy") },
-                    modifier = Modifier.weight(1f)
-                )
-                BloomMoodOption(
-                    label = stringResource(R.string.mood_low),
-                    selected = mood == "Low",
-                    index = 4,
-                    onClick = { onMoodSelected("Low") },
-                    modifier = Modifier.weight(1f)
+                QuickAction(
+                    text = stringResource(R.string.note),
+                    modifier = Modifier.weight(1f),
+                    onClick = onNote
                 )
             }
-        }
-
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            QuickAction(
-                text = stringResource(R.string.kicks),
-                modifier = Modifier.weight(1f),
-                onClick = onKicks
-            )
-            QuickAction(
-                text = stringResource(R.string.contractions),
-                modifier = Modifier.weight(1f),
-                onClick = onContractions
-            )
-            QuickAction(
-                text = stringResource(R.string.note),
-                modifier = Modifier.weight(1f),
-                onClick = onNote
-            )
-        }
 
             BloomTextButton(
                 text = stringResource(R.string.open_week_story),
@@ -222,7 +222,6 @@ fun TodayScreen(
                 color = palette.deep
             )
         }
-    }
 }
 
 @Composable
