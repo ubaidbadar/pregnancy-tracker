@@ -61,8 +61,7 @@ fun KickCounterScreen(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f, fill = false),
+                .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             Column(
