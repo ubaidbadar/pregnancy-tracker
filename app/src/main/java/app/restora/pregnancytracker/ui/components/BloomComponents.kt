@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -67,7 +71,7 @@ fun BloomPage(
             )
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         content = content
     )
 }
@@ -75,7 +79,7 @@ fun BloomPage(
 @Composable
 fun BloomCard(
     modifier: Modifier = Modifier,
-    padding: Dp = 18.dp,
+    padding: Dp = 20.dp,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val palette = LocalBloomPalette.current
@@ -187,7 +191,7 @@ fun BloomInput(
             .clip(shape)
             .background(palette.surface)
             .border(2.dp, palette.raised, shape)
-            .padding(horizontal = 18.dp, vertical = 16.dp),
+            .padding(horizontal = 20.dp, vertical = 16.dp),
         singleLine = singleLine,
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = palette.ink),
         decorationBox = { innerTextField ->
@@ -216,7 +220,7 @@ fun BloomChip(
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
-            .clickable(onClick = onClick),
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
         shape = RoundedCornerShape(20.dp),
         color = if (selected) palette.primary else palette.tint
     ) {
@@ -274,7 +278,9 @@ fun BloomOrb(
 ) {
     val palette = LocalBloomPalette.current
     Box(
-        modifier = modifier.size(width = width, height = height),
+        modifier = modifier
+            .size(width = width, height = height)
+            .semantics(mergeDescendants = true) { this.contentDescription = contentDescription },
         contentAlignment = Alignment.Center
     ) {
         Canvas(Modifier.fillMaxSize()) {
@@ -404,7 +410,7 @@ fun BloomBottomBar(
                         .weight(1f)
                         .heightIn(min = 52.dp)
                         .clip(RoundedCornerShape(18.dp))
-                        .clickable { onSelect(item.tab) }
+                        .selectable(selected = active, role = Role.Tab, onClick = { onSelect(item.tab) })
                         .padding(vertical = 2.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -569,7 +575,7 @@ fun BloomMoodOption(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .clickable(onClick = onClick)
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
             .padding(vertical = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)
