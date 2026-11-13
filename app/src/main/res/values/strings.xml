@@ -147,6 +147,8 @@
     <string name="loss_option_description">We will stop everything and be gentle</string>
     <string name="changed_situation">My situation has changed</string>
     <string name="changed_situation_description">Choose what to keep</string>
+    <string name="changed_situation_body">Your saved information stays on this phone unless you choose to delete it. You can pause pregnancy updates and keep your private notes.</string>
+    <string name="keep_my_data">Keep my data</string>
     <string name="delete_everything_description">Remove all data from this phone</string>
     <string name="support_content_pending">Support text and resources will be supplied by a clinician or grief-support reviewer.</string>
     <string name="loss_confirmation_title">We are so sorry.</string>
