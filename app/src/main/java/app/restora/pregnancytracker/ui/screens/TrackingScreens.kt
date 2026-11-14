@@ -19,6 +19,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,47 +46,76 @@ fun KickCounterScreen(
     onEnd: () -> Unit
 ) {
     val palette = LocalBloomPalette.current
+    val haptics = LocalHapticFeedback.current
     BloomPage {
         BloomPageTitle(stringResource(R.string.kick_counter))
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            BloomSectionLabel(stringResource(R.string.elapsed))
-            Text(
-                text = formatDuration(elapsedSeconds),
-                color = palette.ink,
-                style = MaterialTheme.typography.headlineMedium
-            )
-        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
+        Surface(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            shape = RoundedCornerShape(18.dp),
+            color = palette.tint
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp)
+            Row(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.kicks_so_far, count),
-                    color = palette.deep,
-                    style = MaterialTheme.typography.headlineMedium
+                    text = stringResource(R.string.elapsed),
+                    color = palette.muted,
+                    style = MaterialTheme.typography.labelLarge
                 )
-                Surface(
-                    modifier = Modifier
-                        .size(230.dp)
-                        .clickable(onClick = onTap),
-                    shape = CircleShape,
-                    color = palette.tint,
-                    shadowElevation = 2.dp
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
+                Text(
+                    text = formatDuration(elapsedSeconds),
+                    color = palette.ink,
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = count.toString(),
+                color = palette.deep,
+                style = MaterialTheme.typography.displayLarge.copy(
+                    fontSize = 68.sp,
+                    lineHeight = 76.sp
+                )
+            )
+            Text(
+                text = stringResource(R.string.kick_count_label),
+                color = palette.muted,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(Modifier.height(28.dp))
+            Surface(
+                onClick = {
+                    haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onTap()
+                },
+                modifier = Modifier.size(168.dp),
+                shape = CircleShape,
+                color = palette.tint,
+                shadowElevation = 2.dp
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Box(
+                        modifier = Modifier
+                            .size(144.dp)
+                            .clip(CircleShape)
+                            .background(palette.primary),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Text(
                             text = stringResource(R.string.tap),
-                            color = palette.deep,
+                            color = palette.onPrimary,
                             style = MaterialTheme.typography.headlineMedium
                         )
                     }
@@ -92,7 +123,6 @@ fun KickCounterScreen(
             }
         }
 
-        Spacer(Modifier.height(8.dp))
         BloomTextButton(
             text = stringResource(R.string.end_session),
             onClick = onEnd,
