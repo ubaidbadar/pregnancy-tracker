@@ -2,6 +2,7 @@ package app.restora.pregnancytracker.ui.screens
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -456,7 +457,11 @@ fun PlanScreen(
                 Surface(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { selectedDay = index },
+                        .selectable(
+                            selected = selected,
+                            role = Role.RadioButton,
+                            onClick = { selectedDay = index }
+                        ),
                     shape = RoundedCornerShape(18.dp),
                     color = if (selected) palette.primary else palette.surface
                 ) {
