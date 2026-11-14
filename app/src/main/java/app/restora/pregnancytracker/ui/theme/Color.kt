@@ -26,6 +26,8 @@ data class BloomPalette(
     val onPrimary: Color,
     val tint: Color,
     val deep: Color,
+    val actionAccent: Color,
+    val onActionAccent: Color,
     val error: Color
 )
 
@@ -47,6 +49,8 @@ private val LagoonPalette = BloomPalette(
     onPrimary = Color.White,
     tint = Color(0xFFDDF1EE),
     deep = Color(0xFF14504E),
+    actionAccent = Color(0xFF1F7A78),
+    onActionAccent = Color.White,
     error = Error
 )
 
@@ -61,6 +65,8 @@ private val ApricotPalette = BloomPalette(
     onPrimary = Color.White,
     tint = Color(0xFFFFE6D2),
     deep = Color(0xFF7A3510),
+    actionAccent = Color(0xFFB4531A),
+    onActionAccent = Color.White,
     error = Error
 )
 
@@ -75,6 +81,8 @@ private val DuskPalette = BloomPalette(
     onPrimary = Color.White,
     tint = Color(0xFFEBDDF5),
     deep = Color(0xFF4A2562),
+    actionAccent = Color(0xFF6E3B8E),
+    onActionAccent = Color.White,
     error = Error
 )
 
@@ -89,6 +97,8 @@ private val NightPalette = BloomPalette(
     onPrimary = Color(0xFF1C1519),
     tint = Color(0xFF3A2A24),
     deep = Color(0xFFD3B3F0),
+    actionAccent = Color(0xFFFFB68A),
+    onActionAccent = Color(0xFF2B2024),
     error = Color(0xFFFF9BA8)
 )
 
@@ -103,6 +113,8 @@ private val QuietPalette = BloomPalette(
     onPrimary = Color.White,
     tint = Color(0xFFDDE1E5),
     deep = Color(0xFF3C434A),
+    actionAccent = Color(0xFF5E666F),
+    onActionAccent = Color.White,
     error = Error
 )
 
