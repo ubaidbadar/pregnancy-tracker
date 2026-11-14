@@ -50,6 +50,7 @@ import app.restora.pregnancytracker.ui.components.BloomIconType
 import app.restora.pregnancytracker.ui.components.BloomInput
 import app.restora.pregnancytracker.ui.components.BloomMoodOption
 import app.restora.pregnancytracker.ui.components.BloomOrb
+import app.restora.pregnancytracker.ui.components.BloomProgressSegments
 import app.restora.pregnancytracker.ui.components.BloomPage
 import app.restora.pregnancytracker.ui.components.BloomPageTitle
 import app.restora.pregnancytracker.ui.components.BloomSecondaryButton
