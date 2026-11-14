@@ -271,7 +271,7 @@ fun BloomOrb(
     width: Dp = 250.dp,
     height: Dp = 225.dp,
     valueSize: Int = 76,
-    contentDescription: String = label
+    contentDescription: String = "$value, $label"
 ) {
     val palette = LocalBloomPalette.current
     Box(
