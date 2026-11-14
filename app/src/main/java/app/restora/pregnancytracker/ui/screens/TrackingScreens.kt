@@ -252,7 +252,7 @@ fun ContractionTimerScreen(
                     modifier = Modifier
                         .size(222.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFFFB68A)),
+                        .background(palette.actionAccent),
                     contentAlignment = Alignment.TopCenter
                 ) {
                     Text(
