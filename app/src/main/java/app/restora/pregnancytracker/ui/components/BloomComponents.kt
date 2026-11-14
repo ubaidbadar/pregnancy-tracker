@@ -444,7 +444,11 @@ enum class BloomIconType {
     JOURNAL,
     TOOLS,
     PLAN,
-    PROFILE
+    PROFILE,
+    KICK_COUNTER,
+    CONTRACTIONS,
+    QUESTIONS,
+    HOSPITAL_BAG
 }
 
 @Composable
@@ -528,6 +532,54 @@ fun BloomIcon(
                     size = Size(size.width * 0.64f, size.height * 0.48f),
                     style = Stroke(stroke, cap = StrokeCap.Round)
                 )
+            }
+            BloomIconType.KICK_COUNTER -> {
+                drawCircle(color, radius = size.width * 0.12f, center = Offset(size.width * 0.34f, size.height * 0.34f))
+                drawCircle(color, radius = size.width * 0.12f, center = Offset(size.width * 0.65f, size.height * 0.64f))
+                drawCircle(color, radius = size.width * 0.06f, center = Offset(size.width * 0.72f, size.height * 0.25f))
+            }
+            BloomIconType.CONTRACTIONS -> {
+                val points = listOf(
+                    Offset(size.width * 0.10f, size.height * 0.54f),
+                    Offset(size.width * 0.28f, size.height * 0.54f),
+                    Offset(size.width * 0.40f, size.height * 0.24f),
+                    Offset(size.width * 0.53f, size.height * 0.76f),
+                    Offset(size.width * 0.66f, size.height * 0.42f),
+                    Offset(size.width * 0.90f, size.height * 0.42f)
+                )
+                points.zipWithNext().forEach { (start, end) ->
+                    drawLine(color, start, end, stroke, cap = StrokeCap.Round)
+                }
+            }
+            BloomIconType.QUESTIONS -> {
+                drawRoundRect(
+                    color,
+                    topLeft = Offset(size.width * 0.12f, size.height * 0.12f),
+                    size = Size(size.width * 0.76f, size.height * 0.64f),
+                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(5.dp.toPx()),
+                    style = Stroke(stroke)
+                )
+                drawLine(color, Offset(size.width * 0.28f, size.height * 0.38f), Offset(size.width * 0.70f, size.height * 0.38f), stroke, cap = StrokeCap.Round)
+                drawLine(color, Offset(size.width * 0.28f, size.height * 0.56f), Offset(size.width * 0.58f, size.height * 0.56f), stroke, cap = StrokeCap.Round)
+                drawLine(color, Offset(size.width * 0.28f, size.height * 0.76f), Offset(size.width * 0.18f, size.height * 0.90f), stroke, cap = StrokeCap.Round)
+            }
+            BloomIconType.HOSPITAL_BAG -> {
+                drawRoundRect(
+                    color,
+                    topLeft = Offset(size.width * 0.14f, size.height * 0.30f),
+                    size = Size(size.width * 0.72f, size.height * 0.58f),
+                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(4.dp.toPx()),
+                    style = Stroke(stroke)
+                )
+                drawRoundRect(
+                    color,
+                    topLeft = Offset(size.width * 0.36f, size.height * 0.12f),
+                    size = Size(size.width * 0.28f, size.height * 0.25f),
+                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(3.dp.toPx()),
+                    style = Stroke(stroke)
+                )
+                drawLine(color, Offset(center.x, size.height * 0.46f), Offset(center.x, size.height * 0.72f), stroke, cap = StrokeCap.Round)
+                drawLine(color, Offset(size.width * 0.40f, size.height * 0.59f), Offset(size.width * 0.60f, size.height * 0.59f), stroke, cap = StrokeCap.Round)
             }
         }
     }
