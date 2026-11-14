@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -233,7 +232,7 @@ fun ContractionTimerScreen(
                             .weight(1f)
                             .height(barHeight)
                             .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                            .background(Color(0xFFFFB68A))
+                            .background(palette.actionAccent)
                     )
                 }
             }
@@ -259,7 +258,7 @@ fun ContractionTimerScreen(
                     Text(
                         text = if (isRunning) stringResource(R.string.stop) else stringResource(R.string.start),
                         modifier = Modifier.padding(top = 16.dp),
-                        color = Color(0xFF2B2024),
+                        color = palette.onActionAccent,
                         style = MaterialTheme.typography.headlineMedium
                     )
                 }
