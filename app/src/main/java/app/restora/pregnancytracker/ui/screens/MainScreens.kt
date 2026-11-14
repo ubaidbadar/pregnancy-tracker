@@ -119,8 +119,8 @@ fun TodayScreen(
             value = dayValue,
             label = stringResource(R.string.due_date_short) + " · " + dateLabel,
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 230.dp,
-            height = 207.dp,
+            width = 176.dp,
+            height = 168.dp,
             valueSize = 72
         )
 
@@ -265,8 +265,8 @@ fun CheckInDoneScreen(
             value = stringResource(R.string.checkin_saved_value),
             label = stringResource(R.string.today_label),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 200.dp,
-            height = 180.dp,
+            width = 116.dp,
+            height = 114.dp,
             valueSize = 58
         )
         BloomCard(padding = 20.dp) {
