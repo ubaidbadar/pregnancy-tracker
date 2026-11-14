@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.app.LocaleManager
+import android.os.Build
+import android.os.LocaleList
 import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -91,8 +94,30 @@ fun BloomApp() {
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
+    val systemLanguage = remember(context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java)
+                ?.applicationLocales
+                ?.takeUnless { it.isEmpty }
+                ?.get(0)
+                ?.toLanguageTag()
+        } else {
+            null
+        }
+    }
     var language by rememberSaveable {
-        mutableStateOf(preferences.getString("language", "en") ?: "en")
+        mutableStateOf(systemLanguage ?: preferences.getString("language", "en") ?: "en")
+    }
+
+    LaunchedEffect(language) {
+        preferences.edit().putString("language", language).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val localeManager = context.getSystemService(LocaleManager::class.java)
+            val requestedLocales = LocaleList.forLanguageTags(language)
+            if (localeManager.applicationLocales.toLanguageTags() != requestedLocales.toLanguageTags()) {
+                localeManager.applicationLocales = requestedLocales
+            }
+        }
     }
     var dueDateMillis by rememberSaveable {
         mutableLongStateOf(preferences.getLong("due_date", 0L))
@@ -622,7 +647,7 @@ private fun BloomLocaleProvider(
     CompositionLocalProvider(
         LocalContext provides localizedContext,
         LocalConfiguration provides configuration,
-        LocalLayoutDirection provides if (language == "ur") LayoutDirection.Rtl else LayoutDirection.Ltr,
+        LocalLayoutDirection provides if (locale.language == "ur") LayoutDirection.Rtl else LayoutDirection.Ltr,
         content = content
     )
 }
