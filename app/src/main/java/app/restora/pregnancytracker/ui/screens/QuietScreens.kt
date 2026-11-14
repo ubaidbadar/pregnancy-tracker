@@ -242,15 +242,37 @@ fun BabyArrivedScreen(
     onSkip: () -> Unit
 ) {
     val palette = LocalBloomPalette.current
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomButton(
+                text = stringResource(R.string.switch_postpartum),
+                onClick = onSkip,
+                enabled = false
+            )
+            Text(
+                text = stringResource(R.string.postpartum_not_available),
+                color = palette.muted,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            BloomSecondaryButton(
+                text = stringResource(R.string.archive_pregnancy),
+                onClick = onArchive
+            )
+            BloomTextButton(
+                text = stringResource(R.string.skip),
+                onClick = onSkip,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
+    ) {
         Spacer(Modifier.height(8.dp))
         BloomPageTitle(stringResource(R.string.baby_arrived_title), size = 34)
         BloomOrb(
             value = stringResource(R.string.baby_arrived_hello),
             label = stringResource(R.string.baby_is_here),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 260.dp,
-            height = 234.dp,
+            width = 176.dp,
+            height = 168.dp,
             valueSize = 70
         )
         Text(
@@ -258,26 +280,6 @@ fun BabyArrivedScreen(
             modifier = Modifier.fillMaxWidth(),
             color = palette.muted,
             style = MaterialTheme.typography.bodyLarge
-        )
-        Spacer(Modifier.height(8.dp))
-        BloomButton(
-            text = stringResource(R.string.switch_postpartum),
-            onClick = onSkip,
-            enabled = false
-        )
-        Text(
-            text = stringResource(R.string.postpartum_not_available),
-            color = palette.muted,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        BloomSecondaryButton(
-            text = stringResource(R.string.archive_pregnancy),
-            onClick = onArchive
-        )
-        BloomTextButton(
-            text = stringResource(R.string.skip),
-            onClick = onSkip,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 }
