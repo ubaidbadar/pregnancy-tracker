@@ -573,11 +573,7 @@ fun BloomApp() {
                             isRunning = contractionActive,
                             onStart = ::startContraction,
                             durations = contractionDurations.split(",").mapNotNull { it.toLongOrNull() },
-                            onStop = ::stopContraction,
-                            onBack = {
-                                stopContraction()
-                                goBack()
-                            }
+                            onStop = ::stopContraction
                         )
                         BloomScreen.PLAN -> PlanScreen(
                             appointment = appointment,
