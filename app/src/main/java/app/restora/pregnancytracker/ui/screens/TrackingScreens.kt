@@ -137,14 +137,25 @@ fun KickSummaryScreen(
     onShare: () -> Unit,
     onDone: () -> Unit
 ) {
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomSecondaryButton(
+                text = stringResource(R.string.share_with_midwife),
+                onClick = onShare
+            )
+            BloomButton(
+                text = stringResource(R.string.done),
+                onClick = onDone
+            )
+        }
+    ) {
         BloomPageTitle(stringResource(R.string.session_finished))
         BloomOrb(
             value = count.toString(),
             label = stringResource(R.string.kicks_in_duration, formatDuration(durationSeconds)),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 230.dp,
-            height = 207.dp,
+            width = 146.dp,
+            height = 142.dp,
             valueSize = 76
         )
         BloomCard(padding = 20.dp) {
@@ -154,15 +165,6 @@ fun KickSummaryScreen(
                 style = MaterialTheme.typography.bodyLarge
             )
         }
-        Spacer(Modifier.height(8.dp))
-        BloomSecondaryButton(
-            text = stringResource(R.string.share_with_midwife),
-            onClick = onShare
-        )
-        BloomButton(
-            text = stringResource(R.string.done),
-            onClick = onDone
-        )
     }
 }
 
