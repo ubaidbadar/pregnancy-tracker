@@ -55,6 +55,7 @@ import app.restora.pregnancytracker.ui.theme.LocalBloomPalette
 @Composable
 fun BloomPage(
     modifier: Modifier = Modifier,
+    bottomContent: (@Composable ColumnScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val palette = LocalBloomPalette.current
@@ -66,11 +67,26 @@ fun BloomPage(
                     colors = listOf(palette.backgroundTop, palette.backgroundBottom)
                 )
             )
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        content = content
-    )
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp, vertical = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            content = content
+        )
+        if (bottomContent != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                content = bottomContent
+            )
+        }
+    }
 }
 
 @Composable
