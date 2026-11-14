@@ -30,8 +30,11 @@ jobs:
           cmdline-tools-version: '15859902'
           packages: 'platform-tools emulator'
 
+      - name: Inspect Android preview SDK packages
+        run: android sdk list --all --canary | grep -E 'android-37|platforms/' || true
+
       - name: Install Android 17 compile SDK
-        run: sdkmanager --channel=3 "platforms;android-37"
+        run: android sdk install --canary platforms/android-37
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
