@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    name: Build and unit tests
+    name: Build, unit tests and Compose UI tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out source
@@ -25,15 +25,25 @@ jobs:
           java-version: '17'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
-          packages: platform-tools
+          cmdline-tools-version: '15859902'
+          packages: 'platform-tools emulator'
 
-      - name: Install compile SDK
+      - name: Install Android 17 compile SDK
         run: sdkmanager --channel=3 "platforms;android-37"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build debug app and run unit tests
-        run: ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest testDebugUnitTest
+        run: ./gradlew --no-daemon assembleDebug testDebugUnitTest
+
+      - name: Run Compose UI tests on Android 16
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          arch: x86_64
+          target: google_apis
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
+          script: ./gradlew --no-daemon connectedDebugAndroidTest
