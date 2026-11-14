@@ -571,10 +571,7 @@ fun PlanScreen(
                 when (editor) {
                     "appointment" -> onAppointmentChange(it)
                     "question" -> onQuestionChange(it)
-                    else -> {
-                        checklistDone = false
-                        onChecklistChange(it)
-                    }
+                    else -> onChecklistChange(it)
                 }
                 editor = ""
             }
