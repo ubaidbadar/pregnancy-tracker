@@ -396,7 +396,7 @@ private fun ToolCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(142.dp)
+                .heightIn(min = 142.dp)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
