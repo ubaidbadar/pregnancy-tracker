@@ -147,6 +147,9 @@ fun BloomApp() {
     var checklistItem by rememberSaveable {
         mutableStateOf(preferences.getString("checklist_item", "") ?: "")
     }
+    var checklistDone by rememberSaveable {
+        mutableStateOf(preferences.getBoolean("checklist_done", false))
+    }
     var trackingPaused by rememberSaveable {
         mutableStateOf(preferences.getBoolean("tracking_paused", false))
     }
@@ -296,6 +299,7 @@ fun BloomApp() {
         appointment = ""
         question = ""
         checklistItem = ""
+        checklistDone = false
         trackingPaused = false
         pregnancyEnded = false
         pregnancyArchived = false
@@ -324,6 +328,7 @@ fun BloomApp() {
         appointment,
         question,
         checklistItem,
+        checklistDone,
         trackingPaused,
         pregnancyEnded,
         pregnancyArchived,
@@ -343,6 +348,7 @@ fun BloomApp() {
             appendLine("Appointment: " + appointment)
             appendLine("Question: " + question)
             appendLine("Checklist item: " + checklistItem)
+            appendLine("Checklist item completed: " + checklistDone)
             appendLine("Tracking paused: " + trackingPaused)
             appendLine("Pregnancy ended: " + pregnancyEnded)
             appendLine("Pregnancy archived: " + pregnancyArchived)
@@ -577,6 +583,11 @@ fun BloomApp() {
                             appointment = appointment,
                             question = question,
                             checklistItem = checklistItem,
+                            checklistDone = checklistDone,
+                            onChecklistDoneChange = {
+                                checklistDone = it
+                                preferences.edit().putBoolean("checklist_done", it).apply()
+                            },
                             onAppointmentChange = {
                                 appointment = it
                                 preferences.edit().putString("appointment", it).apply()
@@ -587,7 +598,11 @@ fun BloomApp() {
                             },
                             onChecklistChange = {
                                 checklistItem = it
-                                preferences.edit().putString("checklist_item", it).apply()
+                                checklistDone = false
+                                preferences.edit()
+                                    .putString("checklist_item", it)
+                                    .putBoolean("checklist_done", false)
+                                    .apply()
                             }
                         )
                         BloomScreen.JOURNAL -> JournalScreen(
