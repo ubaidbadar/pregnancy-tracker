@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,6 +28,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.background
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -331,26 +334,46 @@ fun ToolsScreen(
 ) {
     BloomPage {
         BloomPageTitle(stringResource(R.string.tools_title))
-        ToolCard(
-            title = stringResource(R.string.kick_counter),
-            subtitle = stringResource(R.string.kick_counter_subtitle),
-            onClick = onKickCounter
-        )
-        ToolCard(
-            title = stringResource(R.string.contractions),
-            subtitle = stringResource(R.string.contractions_subtitle),
-            onClick = onContractions
-        )
-        ToolCard(
-            title = stringResource(R.string.questions),
-            subtitle = stringResource(R.string.questions_subtitle),
-            onClick = onQuestions
-        )
-        ToolCard(
-            title = stringResource(R.string.hospital_bag),
-            subtitle = stringResource(R.string.hospital_bag_subtitle),
-            onClick = onHospitalBag
-        )
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                ToolCard(
+                    title = stringResource(R.string.kick_counter),
+                    subtitle = stringResource(R.string.kick_counter_subtitle),
+                    icon = BloomIconType.KICK_COUNTER,
+                    modifier = Modifier.weight(1f),
+                    onClick = onKickCounter
+                )
+                ToolCard(
+                    title = stringResource(R.string.contractions),
+                    subtitle = stringResource(R.string.contractions_subtitle),
+                    icon = BloomIconType.CONTRACTIONS,
+                    modifier = Modifier.weight(1f),
+                    onClick = onContractions
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                ToolCard(
+                    title = stringResource(R.string.questions),
+                    subtitle = stringResource(R.string.questions_subtitle),
+                    icon = BloomIconType.QUESTIONS,
+                    modifier = Modifier.weight(1f),
+                    onClick = onQuestions
+                )
+                ToolCard(
+                    title = stringResource(R.string.hospital_bag),
+                    subtitle = stringResource(R.string.hospital_bag_subtitle),
+                    icon = BloomIconType.HOSPITAL_BAG,
+                    modifier = Modifier.weight(1f),
+                    onClick = onHospitalBag
+                )
+            }
+        }
     }
 }
 
@@ -358,19 +381,46 @@ fun ToolsScreen(
 private fun ToolCard(
     title: String,
     subtitle: String,
+    icon: BloomIconType,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     val palette = LocalBloomPalette.current
-    BloomCard {
+    Surface(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
+        color = palette.surface,
+        shadowElevation = 3.dp
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(vertical = 2.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+                .height(142.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(title, color = palette.ink, style = MaterialTheme.typography.titleLarge)
-            Text(subtitle, color = palette.muted, style = MaterialTheme.typography.bodyMedium)
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(palette.tint),
+                contentAlignment = Alignment.Center
+            ) {
+                BloomIcon(icon, color = palette.deep, modifier = Modifier.size(20.dp))
+            }
+            Text(
+                text = title,
+                color = palette.ink,
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = 2
+            )
+            Text(
+                text = subtitle,
+                color = palette.muted,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 2
+            )
         }
     }
 }
