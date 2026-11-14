@@ -118,9 +118,9 @@ fun TodayScreen(
             value = dayValue,
             label = stringResource(R.string.due_date_short) + " · " + dateLabel,
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 260.dp,
-            height = 234.dp,
-            valueSize = 83
+            width = 230.dp,
+            height = 207.dp,
+            valueSize = 72
         )
 
         if (pregnancyEnded || pregnancyArchived) {
