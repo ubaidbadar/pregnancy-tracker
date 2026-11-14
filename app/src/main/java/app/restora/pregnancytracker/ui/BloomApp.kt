@@ -100,7 +100,7 @@ fun BloomApp() {
                 ?.applicationLocales
                 ?.takeUnless { it.isEmpty }
                 ?.get(0)
-                ?.toLanguageTag()
+                ?.language
         } else {
             null
         }
