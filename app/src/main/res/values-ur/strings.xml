@@ -28,6 +28,12 @@
     <string name="skip">چھوڑ دیں</string>
     <string name="go_to_today">آج پر جائیں</string>
     <string name="today_eyebrow">آپ کا حمل</string>
+    <string name="tracking_ended_title">حمل کی ٹریکنگ ختم ہو گئی ہے</string>
+    <string name="pregnancy_archived_title">یہ حمل محفوظ کر دیا گیا ہے</string>
+    <string name="data_remains_on_device">آپ کی معلومات اسی فون میں موجود رہیں گی۔</string>
+    <string name="tracking_paused_title">اپ ڈیٹس روک دی گئی ہیں</string>
+    <string name="tracking_paused_body">حمل سے متعلق اپ ڈیٹس روک دی گئی ہیں۔ آپ کی محفوظ معلومات اسی فون میں رہیں گی۔ آپ اپنے نجی نوٹس اور ٹولز استعمال کر سکتی ہیں۔</string>
+    <string name="resume_tracking">اپ ڈیٹس دوبارہ شروع کریں</string>
     <string name="open_profile">پروفائل کھولیں</string>
     <string name="good_morning">صبح بخیر</string>
     <string name="good_morning_named">صبح بخیر، %1$s</string>
