@@ -1,6 +1,7 @@
 package app.restora.pregnancytracker.ui.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -430,6 +430,8 @@ fun PlanScreen(
     appointment: String,
     question: String,
     checklistItem: String,
+    checklistDone: Boolean,
+    onChecklistDoneChange: (Boolean) -> Unit,
     onAppointmentChange: (String) -> Unit,
     onQuestionChange: (String) -> Unit,
     onChecklistChange: (String) -> Unit
@@ -437,7 +439,6 @@ fun PlanScreen(
     var editor by rememberSaveable { mutableStateOf("") }
     var draft by rememberSaveable { mutableStateOf("") }
     var selectedDay by rememberSaveable { mutableStateOf(0) }
-    var checklistDone by rememberSaveable { mutableStateOf(false) }
     val palette = LocalBloomPalette.current
     val days = remember {
         (0..6).map { offset ->
@@ -519,10 +520,23 @@ fun PlanScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Checkbox(
-                        checked = checklistDone,
-                        onCheckedChange = { checklistDone = it }
-                    )
+                    Box(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .toggleable(
+                                value = checklistDone,
+                                role = Role.Checkbox,
+                                onValueChange = onChecklistDoneChange
+                            )
+                            .clip(CircleShape)
+                            .background(if (checklistDone) palette.primary else palette.surface)
+                            .border(2.dp, palette.primary, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (checklistDone) {
+                            Text("✓", color = palette.onPrimary, style = MaterialTheme.typography.labelLarge)
+                        }
+                    }
                     Text(
                         text = checklistItem,
                         color = if (checklistDone) palette.muted else palette.ink,
@@ -576,29 +590,28 @@ fun JournalScreen(
     var showEditor by rememberSaveable { mutableStateOf(false) }
     var draft by rememberSaveable { mutableStateOf(note) }
     val palette = LocalBloomPalette.current
+    val hasNote = note.isNotBlank()
 
     BloomPage {
         BloomPageTitle(stringResource(R.string.journal_title))
-        if (mood.isNotBlank()) {
-            BloomCard {
-                BloomSectionLabel(stringResource(R.string.today_label))
+        BloomCard {
+            BloomSectionLabel(stringResource(R.string.today_label))
+            if (mood.isNotBlank()) {
                 Text(
-                    text = moodLabel(mood),
+                    text = stringResource(R.string.feeling_mood, moodLabel(mood)),
                     color = palette.ink,
                     style = MaterialTheme.typography.titleLarge
                 )
             }
+            Text(
+                text = if (hasNote) note else stringResource(R.string.no_journal_note),
+                color = if (hasNote) palette.ink else palette.muted,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
-        if (note.isNotBlank()) {
-            BloomCard {
-                BloomSectionLabel(stringResource(R.string.your_note))
-                Text(note, color = palette.ink, style = MaterialTheme.typography.bodyLarge)
-            }
-        } else {
-            BloomEmptyState(stringResource(R.string.nothing_logged_yesterday))
-        }
+        BloomEmptyState(stringResource(R.string.nothing_logged_yesterday))
         BloomButton(
-            text = stringResource(R.string.new_note),
+            text = stringResource(if (hasNote) R.string.edit_note else R.string.new_note),
             onClick = {
                 draft = note
                 showEditor = true
@@ -608,7 +621,7 @@ fun JournalScreen(
 
     if (showEditor) {
         BloomTextDialog(
-            title = stringResource(R.string.new_note),
+            title = stringResource(if (hasNote) R.string.edit_note else R.string.new_note),
             value = draft,
             placeholder = stringResource(R.string.write_note_placeholder),
             onValueChange = { draft = it },
