@@ -70,6 +70,7 @@
     <string name="hospital_bag">Hospital bag</string>
     <string name="hospital_bag_subtitle">Your checklist</string>
     <string name="elapsed">Elapsed</string>
+    <string name="kick_count_label">kicks so far</string>
     <string name="kicks_so_far">%1$d kicks so far</string>
     <string name="tap">Tap</string>
     <string name="end_session">End session</string>
