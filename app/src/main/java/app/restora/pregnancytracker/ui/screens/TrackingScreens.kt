@@ -74,52 +74,52 @@ fun KickCounterScreen(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = count.toString(),
-                color = palette.deep,
-                style = MaterialTheme.typography.displayLarge.copy(
-                    fontSize = 68.sp,
-                    lineHeight = 76.sp
-                )
+        Spacer(Modifier.height(72.dp))
+        Text(
+            text = count.toString(),
+            modifier = Modifier.fillMaxWidth(),
+            color = palette.deep,
+            style = MaterialTheme.typography.displayLarge.copy(
+                fontSize = 88.sp,
+                lineHeight = 96.sp,
+                textAlign = TextAlign.Center
             )
-            Text(
-                text = stringResource(R.string.kick_count_label),
-                color = palette.muted,
-                style = MaterialTheme.typography.bodyMedium
-            )
+        )
+        Text(
+            text = stringResource(R.string.kick_count_label),
+            modifier = Modifier.fillMaxWidth(),
+            color = palette.muted,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center
+        )
 
-            Spacer(Modifier.height(28.dp))
-            Surface(
-                onClick = {
-                    haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                    onTap()
-                },
-                modifier = Modifier.size(168.dp),
-                shape = CircleShape,
-                color = palette.tint,
-                shadowElevation = 2.dp
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Box(
-                        modifier = Modifier
-                            .size(144.dp)
-                            .clip(CircleShape)
-                            .background(palette.primary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.tap),
-                            color = palette.onPrimary,
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                    }
+        Spacer(Modifier.height(72.dp))
+        Surface(
+            onClick = {
+                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                onTap()
+            },
+            modifier = Modifier
+                .size(230.dp)
+                .align(Alignment.CenterHorizontally),
+            shape = CircleShape,
+            color = palette.tint,
+            shadowElevation = 2.dp
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier
+                        .size(194.dp)
+                        .clip(CircleShape)
+                        .background(palette.primary),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Text(
+                        text = stringResource(R.string.tap),
+                        modifier = Modifier.padding(top = 14.dp),
+                        color = palette.onPrimary,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
                 }
             }
         }
