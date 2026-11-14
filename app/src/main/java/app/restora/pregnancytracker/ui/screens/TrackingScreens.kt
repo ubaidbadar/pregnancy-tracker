@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -241,20 +242,27 @@ fun ContractionTimerScreen(
         }
         Spacer(Modifier.height(8.dp))
         Surface(
+            onClick = { if (isRunning) onStop() else onStart() },
             modifier = Modifier
                 .size(250.dp)
-                .align(Alignment.CenterHorizontally)
-                .clickable { if (isRunning) onStop() else onStart() },
+                .align(Alignment.CenterHorizontally),
             shape = CircleShape,
-            color = palette.surface,
-            border = androidx.compose.foundation.BorderStroke(2.dp, palette.raised)
+            color = palette.raised
         ) {
             Box(contentAlignment = Alignment.Center) {
-                Text(
-                    text = if (isRunning) stringResource(R.string.stop) else stringResource(R.string.start),
-                    color = palette.ink,
-                    style = MaterialTheme.typography.headlineMedium
-                )
+                Box(
+                    modifier = Modifier
+                        .size(222.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFFFB68A)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = if (isRunning) stringResource(R.string.stop) else stringResource(R.string.start),
+                        color = Color(0xFF2B2024),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
             }
         }
         BloomCard {
