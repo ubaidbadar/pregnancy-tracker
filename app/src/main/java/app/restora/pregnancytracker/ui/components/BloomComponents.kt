@@ -31,15 +31,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
@@ -195,15 +200,21 @@ fun BloomInput(
 ) {
     val palette = LocalBloomPalette.current
     val shape = RoundedCornerShape(22.dp)
+    val focused = remember { mutableStateOf(false) }
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = minHeight)
+            .onFocusChanged { focused.value = it.isFocused }
             .clip(shape)
             .background(palette.surface)
-            .border(2.dp, palette.raised, shape)
+            .border(
+                width = if (focused.value) 3.dp else 2.dp,
+                color = if (focused.value) palette.primary else palette.raised,
+                shape = shape
+            )
             .padding(horizontal = 20.dp, vertical = 16.dp),
         singleLine = singleLine,
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = palette.ink),
@@ -607,12 +618,26 @@ fun BloomEmptyState(
     modifier: Modifier = Modifier
 ) {
     val palette = LocalBloomPalette.current
+    val shape = RoundedCornerShape(24.dp)
     Box(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 72.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .border(1.5.dp, palette.raised, RoundedCornerShape(24.dp))
+            .clip(shape)
+            .drawBehind {
+                drawRoundRect(
+                    color = palette.raised,
+                    topLeft = Offset.Zero,
+                    size = Size(size.width, size.height),
+                    cornerRadius = CornerRadius(24.dp.toPx()),
+                    style = Stroke(
+                        width = 1.5.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(
+                            floatArrayOf(7.dp.toPx(), 5.dp.toPx())
+                        )
+                    )
+                )
+            }
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
