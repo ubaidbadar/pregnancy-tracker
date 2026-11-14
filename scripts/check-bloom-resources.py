@@ -24,7 +24,7 @@ def string_names(path: Path) -> set[str]:
 
 
 def resource_references(source: str) -> set[str]:
-    return set(re.findall(r"R\\.string\\.([A-Za-z0-9_]+)", source))
+    return set(re.findall(r"R\.string\.([A-Za-z0-9_]+)", source))
 
 
 def read(path: Path) -> str:
