@@ -298,15 +298,29 @@ fun WeekStoryScreen(
     onAddQuestion: () -> Unit,
     onNext: () -> Unit
 ) {
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomSecondaryButton(
+                text = stringResource(R.string.add_to_questions),
+                onClick = onAddQuestion
+            )
+            BloomButton(
+                text = stringResource(R.string.next),
+                onClick = onNext
+            )
+        }
+    ) {
+        BloomProgressSegments(activeSegments = 2)
+        BloomSectionLabel(stringResource(R.string.week_story_label))
         BloomPageTitle(stringResource(R.string.week_story_title), size = 34)
         BloomOrb(
             value = stringResource(R.string.week_story_mark),
-            label = stringResource(R.string.week_story_label),
+            label = "",
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 210.dp,
-            height = 189.dp,
-            valueSize = 48
+            width = 146.dp,
+            height = 132.dp,
+            valueSize = 34,
+            contentDescription = stringResource(R.string.week_story_title)
         )
         BloomCard(padding = 20.dp) {
             Text(
@@ -315,15 +329,6 @@ fun WeekStoryScreen(
                 style = MaterialTheme.typography.bodyLarge
             )
         }
-        Spacer(Modifier.height(8.dp))
-        BloomSecondaryButton(
-            text = stringResource(R.string.add_to_questions),
-            onClick = onAddQuestion
-        )
-        BloomButton(
-            text = stringResource(R.string.next),
-            onClick = onNext
-        )
     }
 }
 
