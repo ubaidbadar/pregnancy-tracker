@@ -10,6 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 fun BloomTheme(
     mode: BloomThemeMode = BloomThemeMode.DAWN,
     season: BloomSeason = BloomSeason.APRICOT,
+    language: String = "en",
     content: @Composable () -> Unit
 ) {
     val palette = bloomPalette(mode, season)
@@ -46,7 +47,7 @@ fun BloomTheme(
     CompositionLocalProvider(LocalBloomPalette provides palette) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = BloomTypography,
+            typography = bloomTypography(language),
             content = content
         )
     }
