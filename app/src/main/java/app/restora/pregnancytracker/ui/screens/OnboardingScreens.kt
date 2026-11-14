@@ -58,8 +58,8 @@ fun LanguageScreen(
             value = stringResource(R.string.welcome_hello),
             label = stringResource(R.string.welcome_tagline),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 230.dp,
-            height = 207.dp,
+            width = 146.dp,
+            height = 142.dp,
             valueSize = 73
         )
 
@@ -149,8 +149,8 @@ fun DueDateScreen(
             value = dayValue,
             label = monthValue,
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            width = 250.dp,
-            height = 225.dp,
+            width = 206.dp,
+            height = 197.dp,
             valueSize = 84
         )
 
