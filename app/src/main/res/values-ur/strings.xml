@@ -62,6 +62,15 @@
     <string name="hospital_bag_subtitle">آپ کی فہرست</string>
     <string name="plan_title">منصوبہ</string>
     <string name="journal_title">ڈائری</string>
+    <string name="your_note">آپ کا نوٹ</string>
+    <string name="feeling_mood">آپ کی کیفیت: %1$s</string>
+    <string name="no_journal_note">آج کوئی نوٹ شامل نہیں کیا گیا۔</string>
+    <string name="new_note">نیا نوٹ</string>
+    <string name="edit_note">نوٹ میں ترمیم کریں</string>
+    <string name="write_note_placeholder">اپنے لیے ایک نوٹ لکھیں</string>
+    <string name="write_something">کچھ لکھیں</string>
+    <string name="save">محفوظ کریں</string>
+    <string name="cancel">منسوخ کریں</string>
     <string name="together_title">ساتھ</string>
     <string name="me_title">میری معلومات</string>
     <string name="your_privacy">آپ کی رازداری</string>
