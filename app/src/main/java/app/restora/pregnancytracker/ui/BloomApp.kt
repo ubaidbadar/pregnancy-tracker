@@ -356,7 +356,7 @@ fun BloomApp() {
 
     BloomLocaleProvider(language) {
         // Apricot is the Dawn visual fallback; trimester mapping waits for an approved date rule.
-        BloomTheme(mode = themeMode, season = BloomSeason.APRICOT) {
+        BloomTheme(mode = themeMode, season = BloomSeason.APRICOT, language = language) {
             val view = LocalView.current
             SideEffect {
                 val activity = view.context as? Activity
