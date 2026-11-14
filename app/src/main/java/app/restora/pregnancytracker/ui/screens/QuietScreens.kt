@@ -104,7 +104,17 @@ fun PauseScreen(
 ) {
     var showDeleteConfirmation by rememberSaveable { mutableStateOf(false) }
     var showChangedDialog by rememberSaveable { mutableStateOf(false) }
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            Text(
+                text = stringResource(R.string.support_content_pending),
+                modifier = Modifier.fillMaxWidth(),
+                color = LocalBloomPalette.current.muted,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+    ) {
         Spacer(Modifier.height(8.dp))
         BloomPageTitle(stringResource(R.string.quiet_title), size = 32)
         Text(
@@ -131,13 +141,6 @@ fun PauseScreen(
             title = stringResource(R.string.delete_everything),
             description = stringResource(R.string.delete_everything_description),
             onClick = { showDeleteConfirmation = true }
-        )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            text = stringResource(R.string.support_content_pending),
-            modifier = Modifier.fillMaxWidth(),
-            color = LocalBloomPalette.current.muted,
-            style = MaterialTheme.typography.bodyMedium
         )
     }
 
@@ -191,7 +194,17 @@ fun LossConfirmationScreen(
     var showSupportInfo by rememberSaveable { mutableStateOf(false) }
     val palette = LocalBloomPalette.current
 
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            Text(
+                text = stringResource(R.string.support_content_pending),
+                modifier = Modifier.fillMaxWidth(),
+                color = palette.muted,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+    ) {
         Spacer(Modifier.height(8.dp))
         BloomPageTitle(stringResource(R.string.loss_confirmation_title), size = 34)
         Text(
@@ -212,12 +225,6 @@ fun LossConfirmationScreen(
             onClick = { showDeleteConfirmation = true },
             modifier = Modifier.align(Alignment.CenterHorizontally),
             color = palette.deep
-        )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            text = stringResource(R.string.support_content_pending),
-            color = palette.muted,
-            style = MaterialTheme.typography.bodyMedium
         )
     }
 
