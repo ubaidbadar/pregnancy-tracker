@@ -75,6 +75,7 @@ fun TodayScreen(
     onResumeTracking: () -> Unit
 ) {
     val palette = LocalBloomPalette.current
+    val openProfileDescription = stringResource(R.string.open_profile)
     val dueDate = if (dueDateMillis > 0L) Date(dueDateMillis) else null
     val dayValue = dueDate?.let { SimpleDateFormat("d", Locale.forLanguageTag(language)).format(it) } ?: "—"
     val dateLabel = dueDate?.let {
@@ -99,7 +100,7 @@ fun TodayScreen(
                 modifier = Modifier
                     .size(48.dp)
                     .clickable(role = Role.Button, onClick = onProfile)
-                    .semantics { contentDescription = stringResource(R.string.open_profile) },
+                    .semantics { contentDescription = openProfileDescription },
                 shape = CircleShape,
                 color = palette.surface,
                 shadowElevation = 3.dp
