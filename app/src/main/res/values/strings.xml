@@ -101,7 +101,10 @@
     <string name="write_something">Write something</string>
     <string name="journal_title">Journal</string>
     <string name="your_note">Your note</string>
+    <string name="feeling_mood">Feeling %1$s</string>
+    <string name="no_journal_note">No note added today.</string>
     <string name="new_note">New note</string>
+    <string name="edit_note">Edit note</string>
     <string name="write_note_placeholder">Write a note for yourself</string>
     <string name="together_title">Together</string>
     <string name="together_mark">Bloom</string>
