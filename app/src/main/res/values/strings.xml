@@ -147,7 +147,7 @@
     <string name="quiet_question">What would help right now?</string>
     <string name="pause_updates">Pause updates and reminders</string>
     <string name="pause_updates_description">Your data stays on this phone</string>
-    <string name="loss_option">I&apos;ve lost my pregnancy</string>
+    <string name="loss_option">I\'ve lost my pregnancy</string>
     <string name="loss_option_description">We will stop everything and be gentle</string>
     <string name="changed_situation">My situation has changed</string>
     <string name="changed_situation_description">Choose what to keep</string>
