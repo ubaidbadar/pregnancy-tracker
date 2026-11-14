@@ -36,6 +36,9 @@ jobs:
       - name: Install Android 17 compile SDK
         run: android sdk install --canary platforms/android-37
 
+      - name: Check Bloom string resources and Urdu launch-flow coverage
+        run: python3 scripts/check-bloom-resources.py
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
