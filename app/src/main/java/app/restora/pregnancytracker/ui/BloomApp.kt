@@ -112,10 +112,11 @@ fun BloomApp() {
     LaunchedEffect(language) {
         preferences.edit().putString("language", language).apply()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val localeManager = context.getSystemService(LocaleManager::class.java)
-            val requestedLocales = LocaleList.forLanguageTags(language)
-            if (localeManager.applicationLocales.toLanguageTags() != requestedLocales.toLanguageTags()) {
-                localeManager.applicationLocales = requestedLocales
+            context.getSystemService(LocaleManager::class.java)?.let { localeManager ->
+                val requestedLocales = LocaleList.forLanguageTags(language)
+                if (localeManager.applicationLocales.toLanguageTags() != requestedLocales.toLanguageTags()) {
+                    localeManager.applicationLocales = requestedLocales
+                }
             }
         }
     }
