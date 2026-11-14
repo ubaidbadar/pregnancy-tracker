@@ -44,7 +44,14 @@ fun LanguageScreen(
     onSelectLanguage: (String) -> Unit,
     onContinue: () -> Unit
 ) {
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomButton(
+                text = stringResource(R.string.continue_label),
+                onClick = onContinue
+            )
+        }
+    ) {
         BloomProgressSegments(activeSegments = 1)
         BloomPageTitle(stringResource(R.string.welcome_to_bloom), size = 34)
         BloomOrb(
@@ -69,12 +76,6 @@ fun LanguageScreen(
             onClick = { onSelectLanguage("ur") }
         )
 
-        Spacer(Modifier.height(8.dp))
-        BloomButton(
-            text = stringResource(R.string.continue_label),
-            onClick = onContinue
-        )
-        Spacer(Modifier.height(8.dp))
     }
 }
 
@@ -133,7 +134,15 @@ fun DueDateScreen(
         SimpleDateFormat("MMMM yyyy", Locale.forLanguageTag(language)).format(it)
     } ?: stringResource(R.string.choose_due_date)
 
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomButton(
+                text = stringResource(R.string.continue_label),
+                onClick = onContinue,
+                enabled = dueDateMillis > 0L
+            )
+        }
+    ) {
         BloomProgressSegments(activeSegments = 2)
         BloomPageTitle(stringResource(R.string.due_date_title))
         BloomOrb(
@@ -186,13 +195,6 @@ fun DueDateScreen(
             color = palette.muted,
             style = MaterialTheme.typography.bodyMedium
         )
-        Spacer(Modifier.height(8.dp))
-        BloomButton(
-            text = stringResource(R.string.continue_label),
-            onClick = onContinue,
-            enabled = dueDateMillis > 0L
-        )
-        Spacer(Modifier.height(8.dp))
     }
 }
 
@@ -206,7 +208,14 @@ fun NameAndLabelScreen(
     onPartnerLabelChange: (String) -> Unit,
     onContinue: () -> Unit
 ) {
-    BloomPage {
+    BloomPage(
+        bottomContent = {
+            BloomButton(
+                text = stringResource(R.string.go_to_today),
+                onClick = onContinue
+            )
+        }
+    ) {
         BloomProgressSegments(activeSegments = 3)
         BloomPageTitle(stringResource(R.string.name_label_title))
         BloomSectionLabel(stringResource(R.string.nickname_optional))
@@ -269,11 +278,5 @@ fun NameAndLabelScreen(
             color = LocalBloomPalette.current.muted,
             style = MaterialTheme.typography.bodyMedium
         )
-        Spacer(Modifier.height(8.dp))
-        BloomButton(
-            text = stringResource(R.string.go_to_today),
-            onClick = onContinue
-        )
-        Spacer(Modifier.height(8.dp))
     }
 }
