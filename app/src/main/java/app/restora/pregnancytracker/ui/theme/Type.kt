@@ -178,4 +178,4 @@ private val UrduTypography = Typography(
 )
 
 fun bloomTypography(language: String): Typography =
-    if (language == "ur") UrduTypography else LatinTypography
+    if (language.substringBefore('-') == "ur") UrduTypography else LatinTypography
