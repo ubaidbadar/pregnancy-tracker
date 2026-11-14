@@ -163,7 +163,7 @@ fun BloomApp() {
         BloomScreen.LANGUAGE.name
     }
     var screenName by rememberSaveable { mutableStateOf(initialScreen) }
-    var previousScreenName by rememberSaveable { mutableStateOf(BloomScreen.TODAY.name) }
+    var backStack by rememberSaveable { mutableStateOf(arrayListOf<String>()) }
     val screen = runCatching { BloomScreen.valueOf(screenName) }.getOrDefault(BloomScreen.LANGUAGE)
 
     var kickCount by rememberSaveable { mutableLongStateOf(preferences.getLong("kick_count", 0L)) }
@@ -181,8 +181,34 @@ fun BloomApp() {
 
     fun navigate(destination: BloomScreen) {
         if (screenName != destination.name) {
-            previousScreenName = screenName
+            backStack = ArrayList(backStack).apply { add(screenName) }
             screenName = destination.name
+        }
+    }
+
+    fun navigateTab(destination: BloomScreen) {
+        if (screenName != destination.name) {
+            backStack = if (destination == BloomScreen.TODAY) {
+                arrayListOf()
+            } else {
+                arrayListOf(BloomScreen.TODAY.name)
+            }
+            screenName = destination.name
+        }
+    }
+
+    fun resetTo(destination: BloomScreen) {
+        backStack = arrayListOf()
+        screenName = destination.name
+    }
+
+    fun goBack() {
+        val previous = backStack.lastOrNull()
+        if (previous != null) {
+            backStack = ArrayList(backStack.dropLast(1))
+            screenName = previous
+        } else if (screenName != BloomScreen.TODAY.name) {
+            screenName = BloomScreen.TODAY.name
         }
     }
 
@@ -212,6 +238,22 @@ fun BloomApp() {
         navigate(BloomScreen.KICK_COUNTER)
     }
 
+    fun stopKickSession() {
+        if (!kickActive) return
+        kickElapsedSeconds = ((SystemClock.elapsedRealtime() - kickStartedAt) / 1_000L).coerceAtLeast(0L)
+        kickDurationSeconds = kickElapsedSeconds
+        kickActive = false
+        preferences.edit()
+            .putLong("kick_count", kickCount)
+            .putLong("kick_duration", kickDurationSeconds)
+            .apply()
+    }
+
+    fun finishKickSession() {
+        stopKickSession()
+        screenName = BloomScreen.KICK_SUMMARY.name
+    }
+
     fun startContraction() {
         val now = SystemClock.elapsedRealtime()
         if (contractionLastStoppedAt > 0L) {
@@ -239,7 +281,7 @@ fun BloomApp() {
             .putString("partner_label", partnerLabel)
             .putBoolean("onboarding_complete", true)
             .apply()
-        navigate(BloomScreen.TODAY)
+        resetTo(BloomScreen.TODAY)
     }
 
     fun deleteEverything() {
@@ -268,7 +310,7 @@ fun BloomApp() {
         contractionElapsedSeconds = 0L
         contractionLastGapSeconds = 0L
         contractionActive = false
-        navigate(BloomScreen.LANGUAGE)
+        resetTo(BloomScreen.LANGUAGE)
     }
 
     val exportText = remember(
@@ -350,26 +392,20 @@ fun BloomApp() {
         }
     }
 
-    BackHandler(enabled = screen != BloomScreen.LANGUAGE && screen != BloomScreen.TODAY) {
+    BackHandler(
+        enabled = screen != BloomScreen.LANGUAGE &&
+            (backStack.isNotEmpty() || screen == BloomScreen.KICK_COUNTER || screen == BloomScreen.CONTRACTION_TIMER)
+    ) {
         when (screen) {
             BloomScreen.KICK_COUNTER -> {
-                kickActive = false
-                kickDurationSeconds = kickElapsedSeconds
-                preferences.edit()
-                    .putLong("kick_count", kickCount)
-                    .putLong("kick_duration", kickDurationSeconds)
-                    .apply()
-                navigate(BloomScreen.TODAY)
+                stopKickSession()
+                goBack()
             }
             BloomScreen.CONTRACTION_TIMER -> {
                 stopContraction()
-                navigate(BloomScreen.TOOLS)
+                goBack()
             }
-            else -> {
-                val previous = runCatching { BloomScreen.valueOf(previousScreenName) }
-                    .getOrDefault(BloomScreen.TODAY)
-                screenName = previous.name
-            }
+            else -> goBack()
         }
     }
 
@@ -424,10 +460,10 @@ fun BloomApp() {
                             ),
                             onSelect = { tab ->
                                 when (tab) {
-                                    BloomTab.TODAY -> navigate(BloomScreen.TODAY)
-                                    BloomTab.JOURNAL -> navigate(BloomScreen.JOURNAL)
-                                    BloomTab.TOOLS -> navigate(BloomScreen.TOOLS)
-                                    BloomTab.PLAN -> navigate(BloomScreen.PLAN)
+                                    BloomTab.TODAY -> navigateTab(BloomScreen.TODAY)
+                                    BloomTab.JOURNAL -> navigateTab(BloomScreen.JOURNAL)
+                                    BloomTab.TOOLS -> navigateTab(BloomScreen.TOOLS)
+                                    BloomTab.PLAN -> navigateTab(BloomScreen.PLAN)
                                 }
                             }
                         )
@@ -485,11 +521,11 @@ fun BloomApp() {
                         )
                         BloomScreen.CHECK_IN_DONE -> CheckInDoneScreen(
                             mood = mood,
-                            onDone = { navigate(BloomScreen.TODAY) }
+                            onDone = ::goBack
                         )
                         BloomScreen.WEEK_STORY -> WeekStoryScreen(
                             onAddQuestion = { navigate(BloomScreen.PLAN) },
-                            onNext = { navigate(BloomScreen.TODAY) }
+                            onNext = ::goBack
                         )
                         BloomScreen.TOOLS -> ToolsScreen(
                             onKickCounter = ::startKickSession,
@@ -504,12 +540,7 @@ fun BloomApp() {
                                 kickCount += 1L
                                 preferences.edit().putLong("kick_count", kickCount).apply()
                             },
-                            onEnd = {
-                                kickDurationSeconds = kickElapsedSeconds
-                                kickActive = false
-                                preferences.edit().putLong("kick_duration", kickDurationSeconds).apply()
-                                navigate(BloomScreen.KICK_SUMMARY)
-                            }
+                            onEnd = ::finishKickSession
                         )
                         BloomScreen.KICK_SUMMARY -> KickSummaryScreen(
                             count = kickCount,
@@ -528,7 +559,7 @@ fun BloomApp() {
                                 }
                                 context.startActivity(Intent.createChooser(shareIntent, null))
                             },
-                            onDone = { navigate(BloomScreen.TODAY) }
+                            onDone = ::goBack
                         )
                         BloomScreen.CONTRACTION_TIMER -> ContractionTimerScreen(
                             elapsedSeconds = contractionElapsedSeconds,
@@ -539,7 +570,7 @@ fun BloomApp() {
                             onStop = ::stopContraction,
                             onBack = {
                                 stopContraction()
-                                navigate(BloomScreen.TOOLS)
+                                goBack()
                             }
                         )
                         BloomScreen.PLAN -> PlanScreen(
@@ -585,13 +616,13 @@ fun BloomApp() {
                             onDeleteEverything = ::deleteEverything
                         )
                         BloomScreen.PREMIUM -> PremiumScreen(
-                            onNotNow = { navigate(BloomScreen.ME) }
+                            onNotNow = ::goBack
                         )
                         BloomScreen.PAUSE_OR_END -> PauseScreen(
                             onPause = {
                                 trackingPaused = true
                                 preferences.edit().putBoolean("tracking_paused", true).apply()
-                                navigate(BloomScreen.TODAY)
+                                resetTo(BloomScreen.TODAY)
                             },
                             onLoss = {
                                 trackingPaused = true
@@ -605,7 +636,7 @@ fun BloomApp() {
                             onChanged = {
                                 trackingPaused = true
                                 preferences.edit().putBoolean("tracking_paused", true).apply()
-                                navigate(BloomScreen.TODAY)
+                                resetTo(BloomScreen.TODAY)
                             },
                             onDelete = ::deleteEverything
                         )
@@ -617,9 +648,9 @@ fun BloomApp() {
                             onArchive = {
                                 pregnancyArchived = true
                                 preferences.edit().putBoolean("pregnancy_archived", true).apply()
-                                navigate(BloomScreen.TODAY)
+                                resetTo(BloomScreen.TODAY)
                             },
-                            onSkip = { navigate(BloomScreen.TODAY) }
+                            onSkip = { resetTo(BloomScreen.TODAY) }
                         )
                     }
                 }
