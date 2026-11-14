@@ -51,6 +51,10 @@
     <string name="tools_title">ٹولز</string>
     <string name="kick_counter">حرکات شمار کریں</string>
     <string name="kick_counter_subtitle">بچے کی حرکات گنیں</string>
+    <string name="kick_count_label">اب تک حرکات</string>
+    <string name="elapsed">گزر چکا وقت</string>
+    <string name="tap">چھوئیں</string>
+    <string name="end_session">سیشن ختم کریں</string>
     <string name="contractions_subtitle">درد کا وقت نوٹ کریں</string>
     <string name="questions">سوالات</string>
     <string name="questions_subtitle">اپنی مڈوائف کے لیے</string>
