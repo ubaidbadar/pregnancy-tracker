@@ -1,7 +1,6 @@
 package app.restora.pregnancytracker.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
@@ -175,8 +174,7 @@ fun ContractionTimerScreen(
     durations: List<Long>,
     isRunning: Boolean,
     onStart: () -> Unit,
-    onStop: () -> Unit,
-    onBack: () -> Unit
+    onStop: () -> Unit
 ) {
     val palette = LocalBloomPalette.current
     BloomPage {
@@ -228,14 +226,14 @@ fun ContractionTimerScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.Bottom
             ) {
-                durations.takeLast(8).forEach { duration ->
+                durations.takeLast(6).forEach { duration ->
                     val barHeight = (20f + 60f * duration.toFloat() / maxDuration.toFloat()).dp
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .height(barHeight)
                             .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                            .background(palette.primary.copy(alpha = 0.78f))
+                            .background(Color(0xFFFFB68A))
                     )
                 }
             }
@@ -247,7 +245,8 @@ fun ContractionTimerScreen(
                 .size(250.dp)
                 .align(Alignment.CenterHorizontally),
             shape = CircleShape,
-            color = palette.raised
+            color = palette.backgroundTop,
+            border = androidx.compose.foundation.BorderStroke(2.dp, palette.raised)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Box(
@@ -255,10 +254,11 @@ fun ContractionTimerScreen(
                         .size(222.dp)
                         .clip(CircleShape)
                         .background(Color(0xFFFFB68A)),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.TopCenter
                 ) {
                     Text(
                         text = if (isRunning) stringResource(R.string.stop) else stringResource(R.string.start),
+                        modifier = Modifier.padding(top = 16.dp),
                         color = Color(0xFF2B2024),
                         style = MaterialTheme.typography.headlineMedium
                     )
@@ -272,11 +272,6 @@ fun ContractionTimerScreen(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-        BloomTextButton(
-            text = stringResource(R.string.back_to_tools),
-            onClick = onBack,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
     }
 }
 
