@@ -348,10 +348,9 @@ fun BloomApp() {
     }
 
     val themeMode = when {
-        pregnancyEnded -> BloomThemeMode.QUIET
+        pregnancyEnded || pregnancyArchived -> BloomThemeMode.QUIET
         screen == BloomScreen.CONTRACTION_TIMER -> BloomThemeMode.NIGHT
-        screen == BloomScreen.PAUSE_OR_END || screen == BloomScreen.LOSS_CONFIRMATION -> BloomThemeMode.QUIET
-        screen == BloomScreen.TODAY && pregnancyArchived -> BloomThemeMode.QUIET
+        trackingPaused || screen == BloomScreen.PAUSE_OR_END || screen == BloomScreen.LOSS_CONFIRMATION -> BloomThemeMode.QUIET
         else -> BloomThemeMode.DAWN
     }
 
@@ -550,7 +549,7 @@ fun BloomApp() {
                             userLabel = userLabel,
                             partnerLabel = partnerLabel,
                             language = language,
-                            quietMode = pregnancyEnded,
+                            quietMode = pregnancyEnded || trackingPaused || pregnancyArchived,
                             onLanguageChange = ::selectLanguage,
                             onExport = { exportLauncher.launch("bloom-data.txt") },
                             onPauseOrEnd = { navigate(BloomScreen.PAUSE_OR_END) },
