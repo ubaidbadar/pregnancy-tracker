@@ -1,0 +1,55 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build, unit tests and Compose UI tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          cmdline-tools-version: '15859902'
+          packages: 'platform-tools emulator'
+
+      - name: Inspect Android preview SDK packages
+        run: android sdk list --all --canary | grep -E 'android-37|platforms/' || true
+
+      - name: Install Android 17 compile SDK
+        run: android sdk install --canary platforms/android-37
+
+      - name: Check Bloom string resources and Urdu launch-flow coverage
+        run: python3 scripts/check-bloom-resources.py
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug app and run unit tests
+        run: ./gradlew --no-daemon assembleDebug testDebugUnitTest
+
+      - name: Run Compose UI tests on Android 16
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          arch: x86_64
+          target: google_apis
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
+          script: ./gradlew --no-daemon connectedDebugAndroidTest
